@@ -33,11 +33,10 @@ window.FILTERS = [
 ];
 
 window.DIETARY_FILTERS = [
-  { key: 'vegan', label: 'Plant-Based', icon: '🌱', tip: '100% dairy-free & plant-powered' },
+  { key: 'vegan', label: 'Plant-Based', icon: '🌱', tip: 'Estimated from listed ingredients — please confirm with staff' },
   { key: 'lowCaffeine', label: 'Decaf / Low-Caf', icon: '🌿', tip: 'Naturally low caffeine (<40mg) or decaf' },
-  { key: 'fairTrade', label: 'Fair-Trade Certified', icon: '🌍', tip: 'Directly sourced from ethical farmer cooperatives' },
   { key: 'sugarFree', label: 'Sugar-Free', icon: '🍯', tip: 'Zero refined sugars or artificial syrups' },
-  { key: 'nutFree', label: 'Nut-Free Safe', icon: '🥜', tip: 'Safe for tree nut and peanut allergies' }
+  { key: 'nutFree', label: 'No Nuts Listed', icon: '🥜', tip: 'Estimated from listed ingredients — not allergy-safe. Always confirm allergies with staff' }
 ];
 
 window.BARISTA_NOTES = [

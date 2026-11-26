@@ -135,11 +135,10 @@ function cardMeta(p) {
 function dietaryBadges(p) {
   if (!p.dietary) return '';
   const badges = [];
-  if (p.dietary.vegan) badges.push('<span class="micro-badge badge-vegan" title="100% Plant-Based">🌱 Vegan</span>');
+  if (p.dietary.vegan) badges.push('<span class="micro-badge badge-vegan" title="Estimated from listed ingredients — confirm with staff">🌱 Vegan*</span>');
   if (p.dietary.lowCaffeine) badges.push('<span class="micro-badge badge-decaf" title="Low Caffeine / Decaf">🌿 Low-Caf</span>');
-  if (p.dietary.fairTrade) badges.push('<span class="micro-badge badge-fairtrade" title="Fair-Trade Certified">🌍 Fair Trade</span>');
   if (p.dietary.sugarFree) badges.push('<span class="micro-badge badge-sugarfree" title="Refined Sugar Free">🍯 Sugar-Free</span>');
-  if (p.dietary.nutFree) badges.push('<span class="micro-badge badge-nutfree" title="Nut-Free Safe">🥜 Nut-Safe</span>');
+  if (p.dietary.nutFree) badges.push('<span class="micro-badge badge-nutfree" title="Estimated — not allergy-safe. Confirm allergies with staff">🥜 No nuts listed*</span>');
   return badges.length ? `<div class="card-dietary-badges">${badges.slice(0, 3).join('')}</div>` : '';
 }
 

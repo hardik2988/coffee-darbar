@@ -23,9 +23,9 @@
     Social: { name: 'Cascara Fizz', desc: 'Cascara · lime · soda · mint', price: 230, reason: 'The conversation starter, chilled.', caffeine: 35, style: 'cappuccino' },
   };
   const XAI = {
-    Focused: { circadian: 'Optimal morning/midday curve. A double ristretto gives quick alertness while oat milk fats soften the caffeine crash.', match: 94, sourcing: '100% single-origin Ethiopia Guji, bought from a smallholder cooperative at 22% above the Fair Trade floor.', caffeine: '150 mg · optimal focus release' },
+    Focused: { circadian: 'Optimal morning/midday curve. A double ristretto gives quick alertness while oat milk fats soften the caffeine crash.', match: 94, sourcing: '100% single-origin Ethiopia Guji, example of buying from a smallholder cooperative.', caffeine: '150 mg · optimal focus release' },
     Bright: { circadian: 'Midday balance. Slow cold steeping removes bitter acids; citrus oils add a bright lift.', match: 91, sourcing: 'Colombia Huila organic cooperative. Shade-grown cherries, no chemical run-off.', caffeine: '110 mg · smooth sustained energy' },
-    Slow: { circadian: 'Late-afternoon cadence. Cinnamon steadies blood sugar and a single shot protects evening sleep.', match: 96, sourcing: 'Brazil Cerrado regenerative micro-lot with certified soil restoration.', caffeine: '75 mg · gentle afternoon comfort' },
+    Slow: { circadian: 'Late-afternoon cadence. Cinnamon steadies blood sugar and a single shot protects evening sleep.', match: 96, sourcing: 'Brazil Cerrado regenerative micro-lot — example of regenerative sourcing.', caffeine: '75 mg · gentle afternoon comfort' },
     Social: { circadian: 'Evening sipping. Very low caffeine protects sleep while offering wine-like fruit notes.', match: 98, sourcing: 'Upcycled coffee-cherry husks (cascara) from Costa Rican farms — extra income from a by-product.', caffeine: '35 mg · naturally low stimulant' },
   };
 
@@ -266,7 +266,7 @@
     const d = XAI[mood], r = REC[mood];
     qs('#xaiTitle').textContent = r.name; qs('#xaiMood').textContent = 'Mood: ' + mood;
     qs('#xaiCircadian').textContent = d.circadian; qs('#xaiSourcing').textContent = d.sourcing;
-    qs('#xaiCaffeine').textContent = d.caffeine; qs('#xaiPct').textContent = d.match + '% circadian match';
+    qs('#xaiCaffeine').textContent = d.caffeine; qs('#xaiPct').textContent = d.match + '% match · illustrative score';
     qs('#xaiBar').style.width = '0';
     lastFocus = document.activeElement;
     modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); lenis && lenis.stop();

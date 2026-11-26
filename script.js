@@ -277,7 +277,7 @@ function initXaiModal() {
           <p id="xaiCircadianText">Optimal morning/midday metabolic curve.</p>
           <div class="xai-bar-wrap">
             <div class="xai-bar-fill" id="xaiMatchFill" style="width:94%"></div>
-            <span id="xaiMatchPct">94% Confidence</span>
+            <span id="xaiMatchPct">94% match · illustrative</span>
           </div>
         </div>
 
@@ -304,7 +304,7 @@ function initXaiModal() {
       </div>
 
       <div class="xai-foot">
-        <span class="xai-version">Darbar Algorithmic Ethics Protocol v2.4 · UPES Capstone</span>
+        <span class="xai-version">Rule-based demo — scores are illustrative · UPES student project</span>
         <button class="btn btn-brass btn-sm" id="xaiDismissBtn">Understood</button>
       </div>
     </div>
@@ -335,7 +335,7 @@ function updateXaiContent(mood) {
   if (qs('#xaiMoodBadge')) qs('#xaiMoodBadge').textContent = `Mood: ${mood}`;
   if (qs('#xaiCircadianText')) qs('#xaiCircadianText').textContent = d.circadian;
   if (qs('#xaiMatchFill')) qs('#xaiMatchFill').style.width = `${d.match}%`;
-  if (qs('#xaiMatchPct')) qs('#xaiMatchPct').textContent = `${d.match}% Circadian Match`;
+  if (qs('#xaiMatchPct')) qs('#xaiMatchPct').textContent = `${d.match}% match · illustrative`;
   if (qs('#xaiSourcingText')) qs('#xaiSourcingText').textContent = d.sourcing;
 }
 function sendChat(text) {
@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'Jaggery, Cardamom & Dark Malt',
       desc: 'Inter-cropped under silver oak alongside wild pepper and cardamom. Spicy sweet profile with velvety crema and gentle malty finish.',
       roast: 'Medium',
-      process: 'Monsooned / Washed',
+      process: 'Washed / Natural',
       harvest: 'Dec — Mar'
     },
     Vietnam: {

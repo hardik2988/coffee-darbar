@@ -70,7 +70,7 @@
   overlay.className = 'dnav-overlay'; overlay.id = 'dnavOverlay';
   overlay.setAttribute('aria-hidden', 'true');
   overlay.innerHTML = LINKS.map(([href, label], i) => `<a class="ov-link" href="${href}"${href === page ? ' aria-current="page"' : ''} style="--i:${i}"><span>0${i + 1}</span><b>${label}</b></a>`).join('')
-    + '<div class="ov-foot"><span>UPES Campus, Dehradun · 7am – 10pm</span><span>@coffeedarbar</span></div>';
+    + '<div class="ov-foot"><span>UPES Campus, Dehradun · 7am – 10pm</span><span>A UPES student project</span></div>';
   header.after(overlay);
 
   /* ---------------- cart ---------------- */
