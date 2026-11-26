@@ -1047,10 +1047,16 @@ function start() {
     if (fps < (LOW ? 22 : 32) && dpr > floor) { dpr = Math.max(floor, dpr - 0.25); renderer.setPixelRatio(dpr); W = 0; }
   }
 
-  let last = performance.now(), first = true, W = 0, H = 0, blank = false;
+  let last = performance.now(), first = true, W = 0, H = 0, blank = false, lastSY = scrollY, movedAt = 0;
+  // Draw on the same clock as the smooth scroll (GSAP's ticker runs Lenis first), so the cups
+  // move in the very same frame as their cards and never trail behind them.
+  let onTicker = false;
+  const nextFrame = () => { if (!onTicker) requestAnimationFrame(frame); };
   function frame(now) {
-    // low tier draws at ~30 fps: half the GPU work, and the cups still move smoothly
-    if (LOW && !first && now - last < 30) { requestAnimationFrame(frame); return; }
+    // while the page is scrolling, every frame is drawn (cups stay glued to their cards);
+    // when everything is still, the low tier idles at ~30 fps to save the GPU
+    if (scrollY !== lastSY) { lastSY = scrollY; movedAt = now; }
+    if (LOW && !first && now - movedAt > 250 && now - last < 30) { nextFrame(); return; }
     const dt = Math.min((now - last) / 1000, 0.1); last = now;
     if (!first && !document.hidden && introOver) adapt(dt);
     const t = now / 1000, cw = canvas.clientWidth, ch = canvas.clientHeight;
@@ -1066,7 +1072,7 @@ function start() {
       // nothing on screen: clear once, then stay idle
       if (!blank) { renderer.setScissorTest(false); renderer.clear(); blank = true; }
       if (first) { first = false; signalReady(); }
-      requestAnimationFrame(frame); return;
+      nextFrame(); return;
     }
     blank = false;
     renderer.setScissorTest(false); renderer.clear(); renderer.setScissorTest(true);
@@ -1078,7 +1084,7 @@ function start() {
       renderer.render(v.scene, v.camera);
     }
     if (first) { first = false; signalReady(); }
-    requestAnimationFrame(frame);
+    nextFrame();
   }
 
   // draw the gold wordmark only once the Anton font is ready
@@ -1094,7 +1100,11 @@ function start() {
   }
   // Drawing starts as the coffee iris covers the screen (or straight away without an intro).
   let loopStarted = false;
-  const startLoop = () => { if (loopStarted) return; loopStarted = true; introOver = true; last = performance.now(); requestAnimationFrame(frame); };
+  const startLoop = () => {
+    if (loopStarted) return; loopStarted = true; introOver = true; last = performance.now();
+    if (window.gsap && gsap.ticker) { onTicker = true; gsap.ticker.add(() => frame(performance.now())); }
+    else requestAnimationFrame(frame);
+  };
   addEventListener('darbar:introexit', startLoop, { once: true });
   addEventListener('darbar:intro', startLoop, { once: true });
 

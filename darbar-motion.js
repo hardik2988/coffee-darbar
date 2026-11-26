@@ -136,11 +136,10 @@
         tf = `translate3d(0,${((1 - p) * 70 + s.lift).toFixed(2)}px,0) scale(${(0.96 + 0.04 * p).toFixed(4)})`;
       } else {
         s.rx = lerp(s.rx, s.ty, k); s.ry = lerp(s.ry, s.tx, k); s.lift = lerp(s.lift, s.tl, k); s.hov = lerp(s.hov, s.th, k);
-        // cards trail the scroll a little, more on the right → a soft wave
-        const lag = reduce ? 0 : clamp(vel * 0.009 * (0.35 + (r.left + r.width / 2) / vw), -24, 24);
-        const ty = (1 - p) * 96 + s.lift + lag;
+        // no scroll lean: cards stay locked to the page while scrolling (the old wave looked glitchy)
+        const ty = (1 - p) * 96 + s.lift;
         const sc = (0.93 + 0.07 * p) * (1 + s.hov * 0.015);
-        tf = `perspective(1100px) translate3d(0,${ty.toFixed(2)}px,0) rotateX(${(s.rx + (1 - p) * 12).toFixed(2)}deg) rotateY(${s.ry.toFixed(2)}deg) skewY(${skew.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+        tf = `perspective(1100px) translate3d(0,${ty.toFixed(2)}px,0) rotateX(${(s.rx + (1 - p) * 12).toFixed(2)}deg) rotateY(${s.ry.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
       }
       if (tf !== s.last) { el.style.transform = tf; s.last = tf; }
       const op = p < 1 ? p.toFixed(3) : '';
@@ -154,9 +153,11 @@
         s.img.style.transform = `translate3d(0,${py.toFixed(2)}px,0) scale(${zoom.toFixed(4)})`;
       }
     }
-    requestAnimationFrame(tick);
+    if (!onTicker) requestAnimationFrame(tick);
   }
-  requestAnimationFrame(tick);
+  // run right after Lenis on GSAP's ticker, so cards and scroll update in the same frame
+  const onTicker = !!(window.gsap && gsap.ticker);
+  if (onTicker) gsap.ticker.add(() => tick(performance.now())); else requestAnimationFrame(tick);
 
   /* ================================================================ */
   /* 3 · Cursor: one smooth tapered ribbon (same feel as Raasta)       */
@@ -287,7 +288,8 @@
     addEventListener('scroll', () => {
       if (!inside || scrollQ) return;
       scrollQ = true;
-      requestAnimationFrame(() => { scrollQ = false; if (inside) { decide(document.elementFromPoint(mx, my)); kick(); } });
+      // hit-testing forces a layout, so do it at most ~8 times a second while scrolling
+      setTimeout(() => requestAnimationFrame(() => { scrollQ = false; if (inside) { decide(document.elementFromPoint(mx, my)); kick(); } }), 120);
     }, { passive: true });
   }
 
