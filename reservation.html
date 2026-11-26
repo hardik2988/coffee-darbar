@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reserve a Seat · Coffee Darbar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.0">
+  <link rel="stylesheet" href="darbar-theme.css?v=1">
+  <link rel="stylesheet" href="darbar-ui.css?v=6">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="darbar-reserve.css?v=6">
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body class="rv-page">
+<div class="rv-progress" id="rvProgress" aria-hidden="true"></div>
+<!-- The header and footer are built by darbar-chrome.js (shared with every page) -->
+<main>
+
+  <!-- 1 · HERO -->
+  <section class="inner-hero rv-hero">
+    <div class="rv-wrap">
+      <span class="eyebrow">03 · Reservations</span>
+      <h1 data-mask-reveal>Your seat<br><span class="gradient-text">at the Darbar.</span></h1>
+      <p class="rv-hero-lede">Seventeen tables and stools, each with its own light, sound and view. Walk the floor plan, pick the one that fits your day, and we'll have it laid before you arrive.</p>
+      <ul class="rv-facts" aria-label="At a glance">
+        <li><b id="rvFreeCount">—</b><span>seats free for your slot</span></li>
+        <li><b>7am – 10pm</b><span>open every day</span></li>
+        <li><b>90 min</b><span>per sitting, unhurried</span></li>
+        <li><b>UPES Bidholi</b><span>Dehradun, Uttarakhand</span></li>
+      </ul>
+      <!-- photo collage (wide screens) -->
+      <div class="rv-collage" id="rvCollage" aria-hidden="true">
+        <figure class="rv-shot rv-shot-a"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" alt=""><figcaption><span>Coffee Darbar</span>The Salon</figcaption></figure>
+        <figure class="rv-shot rv-shot-b"><img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?auto=format&fit=crop&w=700&q=80" alt=""><figcaption><span>Coffee Darbar</span>Velvet Booths</figcaption></figure>
+        <figure class="rv-shot rv-shot-c"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=700&q=80" alt=""><figcaption><span>Coffee Darbar</span>At the bar</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · WHEN (sets live availability on the plan) -->
+  <section class="rv-when" id="when" aria-label="Choose date, time and party size">
+    <div class="rv-wrap rv-when-grid">
+      <div class="rv-field">
+        <span class="rv-label">Date</span>
+        <div class="rv-days" id="rvDays" role="listbox" aria-label="Date" data-lenis-prevent></div>
+      </div>
+      <div class="rv-field">
+        <span class="rv-label">Arrival <em id="rvSlotHint"></em></span>
+        <div class="rv-slots" id="rvSlots" role="listbox" aria-label="Arrival time"></div>
+      </div>
+      <div class="rv-field rv-field-guests">
+        <span class="rv-label">Guests</span>
+        <div class="rv-stepper" role="group" aria-label="Number of guests">
+          <button type="button" id="rvMinus" aria-label="Fewer guests"><i class="fa-solid fa-minus"></i></button>
+          <output id="rvGuests" aria-live="polite">2</output>
+          <button type="button" id="rvPlus" aria-label="More guests"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · FLOOR PLAN + SEAT DETAIL -->
+  <section class="rv-floor" id="floor">
+    <div class="rv-wrap">
+      <header class="rv-head">
+        <div>
+          <span class="rv-kicker">The floor · live availability</span>
+          <h2>Walk the room, <em>choose your seat.</em></h2>
+        </div>
+        <div class="rv-legend" aria-hidden="true">
+          <span><i class="lg lg-free"></i>Available</span>
+          <span><i class="lg lg-sel"></i>Your seat</span>
+          <span><i class="lg lg-taken"></i>Reserved</span>
+          <span><i class="lg lg-small"></i>Too small for party</span>
+        </div>
+      </header>
+
+      <div class="rv-floor-grid">
+        <!-- the plan -->
+        <figure class="rv-plan" id="rvPlan">
+          <div class="rv-plan-bar">
+            <span class="rv-plan-title"><b>Coffee Darbar</b> · Ground floor · UPES Bidholi</span>
+            <div class="rv-zones" id="rvZones" role="group" aria-label="Highlight a zone"></div>
+          </div>
+          <div class="rv-plan-stage" id="rvPlanStage"></div>
+          <figcaption>A scale model of the café. The glass wall at the back faces the Doon valley; the garden terrace is at the front.</figcaption>
+        </figure>
+
+        <!-- the selected seat -->
+        <aside class="rv-seat" id="rvSeat" aria-live="polite">
+          <div class="rv-seat-photo" id="rvSeatPhoto">
+            <img class="rv-ph on" src="" alt=""><img class="rv-ph" src="" alt="">
+            <span class="rv-seat-status" id="rvSeatStatus"></span>
+            <div class="rv-seat-plate">
+              <span>Coffee Darbar</span>
+              <b id="rvSeatPlate"></b>
+              <em id="rvSeatCap"></em>
+            </div>
+            <div class="rv-thumbs" id="rvThumbs" role="group" aria-label="Photos of this seat"></div>
+            <span class="rv-ph-bar" aria-hidden="true"><i id="rvPhBar"></i></span>
+          </div>
+          <div class="rv-seat-body">
+            <div class="rv-seat-top">
+              <span class="rv-seat-code" id="rvSeatCode"></span>
+              <span class="rv-seat-zone" id="rvSeatZone"></span>
+            </div>
+            <h3 id="rvSeatName"></h3>
+            <p class="rv-seat-tag" id="rvSeatTag"></p>
+            <p class="rv-seat-desc" id="rvSeatDesc"></p>
+            <div class="rv-stats" id="rvSeatStats"></div>
+            <div class="rv-meters" id="rvSeatMeters"></div>
+            <div class="rv-chips" id="rvSeatChips"></div>
+            <div class="rv-seat-foot">
+              <div><span>Best for</span><b id="rvSeatBest"></b></div>
+              <div><span>Minimum spend</span><b id="rvSeatMin"></b></div>
+            </div>
+            <a class="rv-btn rv-btn-gold" href="#desk" id="rvSeatCta"><span>Reserve this seat</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · THE RESERVATION DESK -->
+  <section class="rv-desk rv-dark" id="desk">
+    <div class="rv-wrap">
+      <header class="rv-head rv-head-light">
+        <div>
+          <span class="rv-kicker">The reservation desk</span>
+          <h2>Make it <em>yours.</em></h2>
+        </div>
+        <p class="rv-head-note">No payment now. We hold your seat for 15 minutes past your arrival time.</p>
+      </header>
+
+      <form class="rv-desk-grid" id="rvForm" novalidate>
+        <div class="rv-steps">
+          <fieldset class="rv-step">
+            <legend><i>01</i> The occasion</legend>
+            <div class="rv-occasions" id="rvOccasions" role="radiogroup" aria-label="Occasion"></div>
+          </fieldset>
+
+          <fieldset class="rv-step">
+            <legend><i>02</i> Concierge touches <small>optional</small></legend>
+            <div class="rv-addons" id="rvAddons"></div>
+          </fieldset>
+
+          <fieldset class="rv-step">
+            <legend><i>03</i> Your details</legend>
+            <div class="rv-inputs">
+              <label class="rv-input"><input id="rvName" name="name" type="text" placeholder=" " autocomplete="name" required><span>Full name</span></label>
+              <label class="rv-input"><input id="rvEmail" name="email" type="email" placeholder=" " autocomplete="email" required><span>Email</span></label>
+              <label class="rv-input"><input id="rvPhone" name="phone" type="tel" placeholder=" " autocomplete="tel"><span>Phone (optional)</span></label>
+              <label class="rv-input rv-input-wide"><textarea id="rvNote" name="note" rows="2" placeholder=" "></textarea><span>Anything we should know? Allergies, a surprise, a favourite cup…</span></label>
+            </div>
+            <p class="rv-error" id="rvError" role="alert"></p>
+          </fieldset>
+        </div>
+
+        <!-- live pass -->
+        <aside class="rv-pass-col">
+          <div class="rv-pass" id="rvPass">
+            <div class="rv-pass-head">
+              <span class="rv-pass-mark" id="rvPassMark"></span>
+              <div><b>Coffee Darbar</b><span>Reservation pass</span></div>
+              <span class="rv-pass-ref" id="rvPassRef">Draft</span>
+            </div>
+            <div class="rv-pass-seat">
+              <div><span>Seat</span><b id="rvPassCode">—</b></div>
+              <div class="rv-pass-seatname"><span id="rvPassZone"></span><b id="rvPassName"></b></div>
+            </div>
+            <div class="rv-pass-grid">
+              <div><span>Date</span><b id="rvPassDate"></b></div>
+              <div><span>Arrival</span><b id="rvPassTime"></b></div>
+              <div><span>Guests</span><b id="rvPassGuests"></b></div>
+              <div><span>Occasion</span><b id="rvPassOcc"></b></div>
+            </div>
+            <ul class="rv-pass-lines" id="rvPassLines"></ul>
+            <div class="rv-pass-tear" aria-hidden="true"></div>
+            <div class="rv-pass-foot">
+              <div><span>Due at the table</span><b id="rvPassTotal">₹0</b></div>
+              <div class="rv-pass-code" id="rvPassBars" aria-hidden="true"></div>
+            </div>
+            <div class="rv-pass-stamp" id="rvPassStamp" aria-hidden="true"><span>Confirmed</span></div>
+          </div>
+          <button class="rv-btn rv-btn-gold rv-btn-big" type="submit" id="rvSubmit"><span>Confirm reservation</span><i class="fa-solid fa-arrow-right"></i></button>
+          <p class="rv-pass-note" id="rvPassNote">Free to cancel up to one hour before.</p>
+        </aside>
+      </form>
+    </div>
+  </section>
+
+  <!-- 5 · INSIDE THE CAFÉ -->
+  <section class="rv-gallery" id="inside">
+    <div class="rv-wrap">
+      <header class="rv-head">
+        <div>
+          <span class="rv-kicker">Inside Coffee Darbar</span>
+          <h2>Six rooms <em>in one.</em></h2>
+        </div>
+        <p class="rv-head-note">Tap a room to see it on the plan.</p>
+      </header>
+      <div class="rv-rooms" id="rvRooms"></div>
+    </div>
+  </section>
+
+  <!-- 6 · FIND US -->
+  <section class="rv-find" id="find">
+    <div class="rv-wrap">
+      <header class="rv-head">
+        <div>
+          <span class="rv-kicker">Find us</span>
+          <h2>Up the hill, <em>above the valley.</em></h2>
+        </div>
+        <p class="rv-head-note">Coffee Darbar sits inside the UPES Bidholi campus, 21 km from Dehradun's Clock Tower.</p>
+      </header>
+
+      <div class="rv-find-grid">
+        <div class="rv-map-card">
+          <div class="rv-map" id="rvMap" data-lenis-prevent aria-label="Map showing Coffee Darbar at UPES Bidholi, Dehradun"></div>
+          <div class="rv-map-views" id="rvMapViews" role="group" aria-label="Map view">
+            <button type="button" class="on" data-view="campus">Campus</button>
+            <button type="button" data-view="area">Bidholi &amp; Premnagar</button>
+            <button type="button" data-view="city">Dehradun</button>
+          </div>
+          <div class="rv-map-style" id="rvMapStyle" role="group" aria-label="Map style">
+            <button type="button" class="on" data-style="map">Map</button>
+            <button type="button" data-style="sat">Satellite</button>
+          </div>
+          <div class="rv-map-plate">
+            <span class="rv-map-plate-mark" id="rvMapMark"></span>
+            <div><b>Coffee Darbar</b><span>UPES Campus, Bidholi · 30.4171° N, 77.9687° E</span></div>
+          </div>
+        </div>
+
+        <div class="rv-routes">
+          <div class="rv-address">
+            <span class="rv-kicker">Address</span>
+            <p>Coffee Darbar, Energy Acres<br>UPES Campus, Bidholi<br>Dehradun, Uttarakhand 248007</p>
+            <a class="rv-btn rv-btn-ink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=30.4171,77.9687"><span>Open in Google Maps</span><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+          <span class="rv-kicker">Getting here <small>approximate, by road</small></span>
+          <ul class="rv-route-list" id="rvRouteList"></ul>
+          <p class="rv-routes-note"><i class="fa-solid fa-square-parking"></i> Visitor parking at Gate 1, a four-minute walk. Show your reservation pass at the gate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="darbar-chrome.js?v=6"></script>
+<script src="darbar-motion.js?v=6"></script>
+<script src="sound.js?v=3.0"></script>
+<script src="script.js?v=3.0"></script>
+<script src="darbar-reserve.js?v=6"></script>
+<script type="module" src="darbar-plan3d.js?v=7"></script>
+</body>
+</html>

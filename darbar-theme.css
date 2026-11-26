@@ -1,0 +1,153 @@
+/* Coffee Darbar — theme for the inner pages.
+   Loaded last on each page: re-skins the older styles (style.css, pages.css,
+   menu.css, passport.css) to match the homepage. */
+
+:root {
+  /* the old design tokens, remapped to the Darbar palette */
+  --espresso: #f7f0e1;
+  --roast: #efe4cf;
+  --bean: #4a2c1c;
+  --caramel: #a87e3e;
+  --brass: #a87e3e;
+  --brass-soft: #c9a15f;
+  --cream: #2a170e;
+  --ink: #2a170e;
+  --paper: #fbf6ec;
+  --muted: #7b6556;
+  --line: rgba(42, 23, 14, .12);
+  --glass: rgba(251, 246, 236, .92);
+  --glass-bg: rgba(251, 246, 236, .92);
+  --glass-border: rgba(168, 126, 62, .22);
+  --glow: rgba(201, 161, 95, .3);
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --script: 'Cormorant Garamond', Georgia, serif;
+  --body: 'Manrope', system-ui, sans-serif;
+  --mono: 'Manrope', system-ui, sans-serif;
+
+  /* Darbar tokens */
+  --d-cream: #f7f0e1;
+  --d-cream-2: #efe4cf;
+  --d-card: #fbf6ec;
+  --d-ink: #2a170e;
+  --d-muted: #7b6556;
+  --d-gold: #c9a15f;
+  --d-gold-2: #e7cb8f;
+  --d-gold-3: #a87e3e;
+  --d-night: #140b07;
+  --d-anton: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --d-serif: 'Cormorant Garamond', Georgia, serif;
+  --d-sans: 'Manrope', system-ui, sans-serif;
+  --d-gold-grad: linear-gradient(135deg, #e7cb8f, #c9a15f 55%, #a87e3e);
+  --d-stage: radial-gradient(70% 100% at 72% 28%, #4a2a17 0%, #1f120b 55%, #0d0705 100%);
+}
+
+html, body { background-color: var(--d-cream) !important; color: var(--d-ink) !important; font-family: var(--d-sans); }
+::selection { background: var(--d-gold); color: #1a0f08; }
+.page-shell, .section-pad { background: var(--d-cream); }
+h1, h2, h3, h4 { font-family: var(--d-serif); }
+h2, h3 { font-weight: 600; }
+.eyebrow, .editorial-badge { font-family: var(--d-sans) !important; font-weight: 800 !important; letter-spacing: .2em !important; color: var(--d-gold-3) !important; }
+.muted-copy, .text-muted { color: var(--d-muted) !important; }
+.gradient-text, .gold-foil-shimmer { background: linear-gradient(100deg, #c9a15f, #a87e3e) !important; -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important; animation: none !important; }
+.scroll-progress { background: var(--d-gold-grad) !important; }
+.cursor-glow { background: radial-gradient(circle, rgba(201, 161, 95, .12), transparent 65%) !important; }
+
+/* old chrome is replaced by darbar-chrome.js */
+nav.hardi-nav, footer.footer { display: none !important; }
+
+/* ---------- dark page heroes (same stage as the homepage) ---------- */
+.inner-hero:not(.collection-hero), .passport-cover, .collection-intro {
+  position: relative; overflow: hidden; background: var(--d-stage) !important; color: var(--d-cream) !important; border: 0 !important;
+}
+.inner-hero:not(.collection-hero) { padding: 170px 0 96px !important; }
+.inner-hero:not(.collection-hero)::after, .passport-cover::after, .collection-intro::after {
+  content: ''; position: absolute; right: -12vw; bottom: -30vw; width: 60vw; height: 60vw; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(201, 161, 95, .2), transparent 62%);
+}
+.inner-hero:not(.collection-hero) > *, .passport-cover > *, .collection-intro > * { position: relative; z-index: 1; }
+.inner-hero h1, .collection-intro h1, .passport-cover h1 {
+  font-family: var(--d-anton) !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: 0 !important;
+  line-height: .92 !important; font-size: clamp(52px, 8vw, 124px) !important; color: var(--d-cream) !important; max-width: 1150px;
+}
+.inner-hero h1 .gradient-text, .inner-hero h1 .gold-foil-shimmer, .collection-intro h1 .gradient-text, .passport-cover h1 span {
+  display: inline-block; padding-right: .08em; font-family: var(--d-serif) !important; font-style: italic; font-weight: 500;
+  text-transform: none; font-size: .78em; line-height: 1;
+  background: linear-gradient(100deg, var(--d-gold-2), var(--d-gold) 50%, var(--d-gold-3)) !important; -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important;
+}
+.inner-hero:not(.collection-hero) .eyebrow, .collection-intro .eyebrow, .passport-cover .eyebrow, .inner-hero:not(.collection-hero) .editorial-badge { color: var(--d-gold) !important; }
+.inner-hero:not(.collection-hero) p, .collection-intro p, .passport-cover p, .inner-hero:not(.collection-hero) .muted-copy { color: rgba(247, 240, 225, .72) !important; }
+.inner-hero:not(.collection-hero) .btn-ghost, .passport-cover .btn-ghost { color: var(--d-cream) !important; border-color: rgba(247, 240, 225, .4) !important; background: transparent !important; }
+
+/* Menu: only the intro block is dark; the collection below stays on cream */
+.collection-hero { background: var(--d-cream) !important; padding-top: 0 !important; border: 0 !important; }
+.collection-intro { width: 100vw; max-width: none !important; margin-left: calc(50% - 50vw); padding: 170px max(24px, calc(50vw - 50%)) 90px !important; margin-bottom: 44px; }
+.collection-intro h1 { max-width: 1000px; }
+.collection-intro p { max-width: 560px; }
+
+/* 404 page */
+.not-found { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 140px 24px 80px; background: var(--d-stage) !important; color: var(--d-cream); }
+.not-found h1 { font: 400 clamp(110px, 22vw, 300px)/.85 var(--d-anton) !important; text-transform: uppercase; color: var(--d-cream) !important; margin: 10px 0 18px; }
+.not-found .eyebrow { color: var(--d-gold) !important; }
+.not-found p { color: rgba(247, 240, 225, .72) !important; max-width: 440px; margin: 0 auto 30px; }
+
+/* Passport cover */
+.passport-cover { min-height: 72vh; }
+.passport-cover h1 { font-size: clamp(64px, 11vw, 160px) !important; }
+
+/* ---------- buttons ---------- */
+.btn { border-radius: 999px !important; font-family: var(--d-sans) !important; font-weight: 700 !important; letter-spacing: .02em !important; }
+.btn-brass, .btn-gold { background: var(--d-gold-grad) !important; color: #1a0f08 !important; border: 0 !important; box-shadow: 0 10px 30px -12px rgba(201, 161, 95, .75) !important; }
+.btn-brass:hover, .btn-gold:hover { filter: brightness(1.06); color: #1a0f08 !important; }
+.btn-ghost { background: transparent !important; color: var(--d-ink) !important; border: 1px solid rgba(42, 23, 14, .25) !important; box-shadow: none !important; }
+.btn-ghost:hover { background: var(--d-ink) !important; color: var(--d-cream) !important; border-color: var(--d-ink) !important; }
+.btn-darkpill { background: var(--d-ink) !important; color: var(--d-cream) !important; }
+.btn-darkpill:hover { background: var(--d-gold) !important; color: #1a0f08 !important; }
+
+/* ---------- pills / filters / tabs ---------- */
+.filter-btn, .menu-pill, .dietary-chip, .origin-tab, .builder-opt, .ai-pill {
+  border-radius: 999px !important; border: 1px solid rgba(42, 23, 14, .16) !important; background: var(--d-card) !important;
+  color: var(--d-ink) !important; font-family: var(--d-sans) !important; font-weight: 700 !important; transition: background .3s, color .3s, border-color .3s;
+}
+.filter-btn:hover, .menu-pill:hover, .dietary-chip:hover, .origin-tab:hover, .builder-opt:hover { border-color: var(--d-gold) !important; }
+.filter-btn.active, .menu-pill.active, .dietary-chip.active, .origin-tab.active, .builder-opt.active, .ai-pill.active, .is-active.filter-btn {
+  background: var(--d-gold-grad) !important; color: #1a0f08 !important; border-color: transparent !important;
+}
+
+/* ---------- cards & surfaces ---------- */
+.coffee-card, .recipe-card, .zone-card, .floor-plan-card, .seat-showcase-card, .order-panel, .barista-note,
+.passport-page, .altitude-slider-card, .flavor-wheel-wrap, .recommendation-card, .newsletter-card, .passport-teaser-card, .chat-panel, .card {
+  background: var(--d-card) !important; border: 1px solid rgba(42, 23, 14, .08) !important; border-radius: 22px !important;
+  box-shadow: 0 30px 60px -40px rgba(42, 23, 14, .45) !important;
+}
+.coffee-card { transition: transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s !important; }
+.coffee-card:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -40px rgba(42, 23, 14, .6) !important; }
+.coffee-card h3, .recipe-card h3, .zone-card h3, .tier-header h2 { font-family: var(--d-serif) !important; }
+.tier-header h2 { font-family: var(--d-anton) !important; font-weight: 400 !important; text-transform: uppercase; font-size: clamp(34px, 4vw, 56px) !important; }
+.barista-note { border-left: 3px solid var(--d-gold) !important; }
+.micro-badge, .seat-badge, .tier-badge, .caffeine-pill { border-radius: 8px !important; font-family: var(--d-sans) !important; }
+
+/* ---------- forms ---------- */
+.form-control, .form-select, .menu-search-wrap input, .page-shell input[type="text"], .page-shell input[type="email"], .page-shell input[type="tel"], .page-shell textarea {
+  background: var(--d-card) !important; border: 1px solid rgba(42, 23, 14, .16) !important; border-radius: 14px !important;
+  color: var(--d-ink) !important; font-family: var(--d-sans) !important;
+}
+.form-control:focus, .form-select:focus, .menu-search-wrap input:focus, .page-shell textarea:focus {
+  border-color: var(--d-gold) !important; box-shadow: 0 0 0 4px rgba(201, 161, 95, .2) !important; outline: none;
+}
+.form-label { font-family: var(--d-sans) !important; font-weight: 700 !important; letter-spacing: .08em; text-transform: uppercase; font-size: 11px !important; color: var(--d-muted) !important; }
+
+/* ---------- cart drawer (from script.js) ---------- */
+.cart-drawer { background: var(--d-cream) !important; border-left: 1px solid rgba(201, 161, 95, .3) !important; }
+.cart-drawer-header, .cart-drawer-footer { background: var(--d-cream-2) !important; }
+.cart-drawer-header h3 { font-family: var(--d-anton) !important; font-weight: 400 !important; text-transform: uppercase; letter-spacing: .02em; }
+
+/* ---------- XAI modal (script.js) ---------- */
+.xai-modal .xai-panel { background: #1c110b !important; color: var(--d-cream) !important; border: 1px solid rgba(201, 161, 95, .3) !important; border-radius: 26px !important; }
+
+/* old cursor glow from style.css — replaced by the shared cursor */
+.cursor-glow, .hardi-cursor-dot, .hardi-cursor-ring { display: none !important; }
+
+@media (max-width: 640px) {
+  .inner-hero:not(.collection-hero) { padding: 130px 0 70px !important; }
+  .collection-intro { padding-top: 130px !important; }
+}

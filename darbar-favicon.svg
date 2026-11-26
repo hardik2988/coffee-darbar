@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Coffee Darbar browser-tab icon: the jharokha steam crown, bolder so it reads at 16px -->
+  <rect width="64" height="64" rx="14" fill="#1c110b"/>
+  <g stroke="#e2bd78">
+    <path d="M15 54 V30 C15 22 21 18 26 15 C29 13 31 11 32 9 C33 11 35 13 38 15 C43 18 49 22 49 30 V54" stroke-width="3.4"/>
+    <path d="M10 54 H54" stroke-width="3.4"/>
+    <path d="M25.5 40 C24.5 36.5 27 34 26 30.5 C27.5 32 28.6 34 29.2 35.6 C29.8 32.5 31.4 30 32 27 C32.6 30 34.2 32.5 34.8 35.6 C35.4 34 36.5 32 38 30.5 C37 34 39.5 36.5 38.5 40" stroke-width="2.3"/>
+    <path d="M38.5 43 C42.5 42.8 42.5 48 38 48.2" stroke-width="2.4"/>
+  </g>
+  <path d="M24 41 H40 C40 46.5 37 50 32 50 C27 50 24 46.5 24 41 Z" fill="#e2bd78"/>
+  <g fill="#e2bd78"><circle cx="26" cy="29.2" r="2"/><circle cx="32" cy="25.6" r="2.1"/><circle cx="38" cy="29.2" r="2"/></g>
+</svg>

@@ -1,0 +1,905 @@
+/* ============================================================
+   Coffee Darbar — Coffee Collection & Menu (Liceria Boutique Light Luxury)
+   ============================================================ */
+
+html, body {
+  background-color: #faf7f2 !important;
+  color: #24160e !important;
+}
+
+/* ---- editorial intro ---- */
+.collection-hero,
+.inner-hero {
+  background: #faf7f2 !important;
+  color: #24160e !important;
+  padding: 140px 0 35px !important;
+  border-bottom: 1px solid rgba(181,122,75,.16) !important;
+}
+.collection-intro {
+  max-width: 780px;
+}
+.collection-intro .eyebrow {
+  margin-bottom: 10px;
+}
+.collection-intro h1,
+.inner-hero h1 {
+  font-family: var(--display) !important;
+  font-weight: 700 !important;
+  font-size: clamp(36px, 4.8vw, 64px) !important;
+  letter-spacing: -.03em !important;
+  line-height: 1.08 !important;
+  color: #24160e !important;
+  margin: 0 0 14px !important;
+}
+.collection-intro p,
+.inner-hero p {
+  color: #5c473a !important;
+  font-size: 15.5px !important;
+  line-height: 1.6 !important;
+  max-width: 580px;
+}
+
+/* ---- barista note (Light Craft Paper Style) ---- */
+.barista-note {
+  position: relative;
+  background: #ffffff !important;
+  border: 1px solid rgba(181,122,75,.22) !important;
+  border-radius: 14px;
+  padding: 20px 26px;
+  margin: 24px 0 14px;
+  max-width: 720px;
+  box-shadow: 0 6px 20px rgba(70,40,20,.04);
+}
+.barista-note::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 32px;
+  width: 55px;
+  height: 16px;
+  background: rgba(200,134,54,.35);
+  border-radius: 2px;
+  transform: rotate(-2deg);
+}
+.barista-note .bn-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #c88636;
+}
+.barista-note p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: #24160e !important;
+  margin: 6px 0 0;
+}
+
+/* ---- header separation filter pills + search ---- */
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 14px;
+}
+.menu-pill {
+  border: 1px solid rgba(181,122,75,.22) !important;
+  background: #ffffff !important;
+  color: #5c473a !important;
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 2px 8px rgba(70,40,20,.03);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.menu-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--brass) !important;
+  color: #24160e !important;
+}
+.menu-pill.active {
+  background: var(--brass) !important;
+  color: #ffffff !important;
+  border-color: var(--brass) !important;
+  box-shadow: 0 4px 14px rgba(200,134,54,.3) !important;
+  transform: translateY(-1px);
+}
+.menu-search-wrap {
+  position: relative;
+  max-width: 440px;
+  margin: 12px 0 24px;
+}
+.menu-search-wrap i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8d8072;
+}
+.menu-search-wrap input {
+  width: 100%;
+  background: #ffffff !important;
+  border: 1px solid rgba(181,122,75,.24) !important;
+  border-radius: 100px;
+  padding: 12px 18px 12px 44px;
+  color: #24160e !important;
+  outline: 0;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(70,40,20,.03);
+  transition: border-color .25s, box-shadow .25s;
+}
+.menu-search-wrap input:focus {
+  border-color: var(--brass) !important;
+  box-shadow: 0 0 0 3px rgba(200,134,54,.15) !important;
+}
+
+/* ---- dietary & ethical filter bar ---- */
+.dietary-bar-wrap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #ffffff !important;
+  border: 1px solid rgba(181,122,75,.2) !important;
+  border-radius: 16px;
+  padding: 12px 18px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 16px rgba(70,40,20,.04);
+}
+.dietary-bar-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #945620;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 4px;
+}
+.dietary-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.dietary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #faf7f2;
+  border: 1px solid rgba(181,122,75,.2);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5c473a;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.dietary-chip:hover {
+  border-color: var(--brass);
+  color: #24160e;
+  transform: translateY(-1px);
+}
+.dietary-chip.active {
+  background: rgba(200,134,54,.14);
+  border-color: var(--brass);
+  color: #945620;
+  box-shadow: 0 2px 10px rgba(200,134,54,.2);
+}
+.dietary-chip .chip-check { font-size: 9px; display: none; margin-left: 2px; }
+.dietary-chip.active .chip-check { display: inline-block; }
+.dietary-clear-btn {
+  background: none;
+  border: none;
+  color: #8d8072;
+  font-size: 11px;
+  font-family: var(--mono);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.dietary-clear-btn:hover { color: #24160e; text-decoration: underline; }
+.dietary-clear-btn.hidden { display: none; }
+
+/* ---- micro badges ---- */
+.card-dietary-badges { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 8px; }
+.micro-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-family: var(--mono);
+  font-weight: 600;
+  border: 1px solid rgba(181,122,75,.15);
+  background: #faf7f2;
+  color: #5c473a;
+}
+.micro-badge.badge-vegan { border-color: rgba(46,125,50,.3); background: rgba(46,125,50,.08); color: #206e30; }
+.micro-badge.badge-decaf { border-color: rgba(56,142,60,.3); background: rgba(56,142,60,.08); color: #276b38; }
+.micro-badge.badge-fairtrade { border-color: rgba(200,134,54,.35); background: rgba(200,134,54,.08); color: #945620; }
+.micro-badge.badge-sugarfree { border-color: rgba(224,130,44,.3); background: rgba(224,130,44,.08); color: #b35914; }
+.micro-badge.badge-nutfree { border-color: rgba(120,100,80,.25); background: rgba(120,100,80,.06); color: #5c473a; }
+.caffeine-pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: #945620;
+  background: rgba(200,134,54,.12);
+  border: 1px solid rgba(200,134,54,.25);
+  padding: 2px 6px;
+  border-radius: 100px;
+}
+
+/* ---- tier section headers ---- */
+.tier-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 38px 0 20px;
+}
+.tier-header h2 {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: #24160e;
+  margin: 0;
+  letter-spacing: -.02em;
+}
+.tier-header span {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #c88636;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.tier-header::after { content: ''; flex: 1; height: 1px; background: rgba(181,122,75,.18); }
+
+/* ============================================================
+   COMPACT 4-COLUMN PRODUCT GRIDS (Liceria Inspired)
+   ============================================================ */
+.tier1-grid,
+.tier2-grid,
+.tier3-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media(max-width:1199px){
+  .tier1-grid,
+  .tier2-grid,
+  .tier3-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+}
+@media(max-width:767px){
+  .tier1-grid,
+  .tier2-grid,
+  .tier3-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+/* ---- compact coffee cards (Crisp White & Light Warm Shadow) ---- */
+.coffee-card {
+  position: relative;
+  background: #ffffff !important;
+  border: 1px solid rgba(181,122,75,.16) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  box-shadow: 0 4px 16px rgba(70,40,20,.05) !important;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.coffee-card:hover {
+  border-color: var(--brass) !important;
+  box-shadow: 0 12px 30px rgba(70,40,20,.1) !important;
+  transform: translateY(-4px);
+}
+
+/* Compact Card Media */
+.card-media {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 1/1;
+  background: #fbf8f4;
+  margin: 10px 10px 0;
+  border-radius: 12px;
+}
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.95);
+  transition: transform .5s ease;
+}
+.coffee-card:hover .card-media img {
+  transform: scale(1.06);
+}
+.card-steam { position: absolute; top: 10%; left: 50%; display: flex; gap: 6px; opacity: 0; transition: opacity .4s; transform: translateX(-50%); }
+.coffee-card:hover .card-steam { opacity: .8; }
+.card-steam i { width: 3.5px; height: 22px; border-radius: 50%; background: linear-gradient(180deg, rgba(255,255,255,.9), transparent); display: block; animation: steamRise 2.6s ease-in-out infinite; }
+.card-steam i:nth-child(2) { animation-delay: .4s; }
+.card-steam i:nth-child(3) { animation-delay: .8s; }
+@keyframes steamRise { 0% { transform: translateY(6px); opacity: 0; } 30% { opacity: .85; } 100% { transform: translateY(-20px); opacity: 0; } }
+
+.tier-badge {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background: var(--brass);
+  color: #ffffff;
+  font: 700 8.5px var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 100px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  z-index: 2;
+}
+.card-heart {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(181,122,75,.2);
+  display: grid;
+  place-items: center;
+  color: #5c473a;
+  cursor: pointer;
+  transition: all .2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.card-heart:hover {
+  background: #ffffff;
+  color: #d32f2f;
+  transform: scale(1.08);
+}
+.card-heart.is-favorite {
+  color: #d32f2f;
+  background: #ffffff;
+}
+
+.quick-view-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translate(-50%, 10px);
+  opacity: 0;
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(6px);
+  color: #24160e;
+  border: 1px solid rgba(181,122,75,.25);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font: 700 10.5px var(--body);
+  transition: opacity .3s, transform .3s;
+  z-index: 2;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+.coffee-card:hover .quick-view-btn { opacity: 1; transform: translate(-50%, 0); }
+
+/* Interactive 3D Sensory Radar Widget on Card */
+.card-radar-widget {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 5;
+  background: rgba(22, 15, 10, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 12px;
+  padding: 4px 9px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.coffee-card:hover .card-radar-widget,
+.card-radar-widget:hover {
+  border-color: #ffd572;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+  transform: translateY(-2px);
+}
+
+.radar-mini-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #ffd572;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 3D Holographic Sensory Matrix Popover Overlay */
+.card-sensory-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  background: rgba(16, 11, 7, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: scale(0.94) translateY(8px);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+  overflow: hidden;
+}
+
+.card-sensory-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+}
+
+/* Pause animations when sensory overlay is not active to maintain 60 FPS */
+.card-sensory-overlay:not(.is-active) .border-beam::before,
+.card-sensory-overlay:not(.is-active) .radar-orbit-ring,
+.card-sensory-overlay:not(.is-active) .radar-orbit-dashed,
+.card-sensory-overlay:not(.is-active) .radar-node-pulse,
+.card-sensory-overlay:not(.is-active) .live-ping-dot {
+  animation-play-state: paused !important;
+}
+
+.sensory-hud-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.16);
+  padding-bottom: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+.sensory-hud-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffd572;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sensory-hud-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: #ffd572;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sensory-hud-close:hover {
+  background: rgba(212, 175, 55, 0.25);
+  color: #ffffff;
+}
+
+/* 3D Wheel Stage & Tilt */
+.sensory-hud-wheel-stage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  perspective: 500px;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.sensory-3d-svg {
+  width: 154px;
+  height: 154px;
+  overflow: visible;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Concentric 3D Orbit Rings */
+.radar-orbit-ring {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.22);
+  stroke-width: 1px;
+}
+
+.radar-orbit-dashed {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.45);
+  stroke-width: 1.2px;
+  stroke-dasharray: 4 5;
+  transform-origin: 95px 95px;
+  animation: spinRadarOrbit 20s linear infinite;
+}
+
+.radar-orbit-bead {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 6px #ffd572);
+  transform-origin: 95px 95px;
+  animation: spinRadarOrbit 7s linear infinite;
+}
+
+@keyframes spinRadarOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.radar-grid-pentagon {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.18);
+  stroke-width: 0.8px;
+}
+
+.radar-axis-line {
+  stroke: rgba(212, 175, 55, 0.22);
+  stroke-width: 0.8px;
+  stroke-dasharray: 2 2;
+}
+
+.radar-polygon-fill {
+  fill: url(#sensoryWebGrad);
+  stroke: #ffd572;
+  stroke-width: 1.8px;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.55));
+  transform-origin: 95px 95px;
+  animation: radarPolygonBloom 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes radarPolygonBloom {
+  0% {
+    transform: scale(0.25);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.radar-polygon-node {
+  fill: #ffffff;
+  stroke: #c89550;
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 120, 0.95));
+}
+
+.radar-node-pulse {
+  fill: none;
+  stroke: #ffd572;
+  stroke-width: 1px;
+  transform-origin: center;
+  animation: liveRadarPing 2.2s infinite cubic-bezier(0, 0, 0.2, 1);
+}
+
+.radar-axis-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5px;
+  font-weight: 700;
+  fill: #ffd88a;
+  letter-spacing: 0.04em;
+}
+
+/* Sensory Metrics Rows */
+.sensory-hud-metrics {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+  z-index: 2;
+}
+
+.sensory-metric-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+}
+
+.sensory-metric-item span {
+  font-size: 8px;
+  color: #a38c7b;
+  text-transform: uppercase;
+  width: 50px;
+}
+
+.sensory-bar-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(212, 175, 55, 0.16);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.sensory-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c89550, #ffd572);
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sensory-metric-item strong {
+  font-size: 8.5px;
+  color: #ffffff;
+  width: 18px;
+  text-align: right;
+}
+
+.sensory-hud-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: #cbb9a8;
+  position: relative;
+  z-index: 2;
+}
+
+.sensory-hud-footer i {
+  color: var(--brass);
+  margin-right: 3px;
+}
+
+/* Quick View Sensory Section */
+.qv-sensory-box {
+  margin: 14px 0;
+  padding: 14px;
+  background: rgba(28, 19, 14, 0.5);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+}
+
+.qv-sensory-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--brass);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.qv-sensory-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.qv-sensory-dial {
+  flex-shrink: 0;
+}
+
+.qv-sensory-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.qv-pill-item {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 6px;
+  color: #cbb9a8;
+}
+
+.qv-pill-item strong {
+  color: #ffd572;
+}
+
+/* Compact Card Body */
+.card-body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.coffee-card h3 {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: #24160e;
+  margin: 4px 0 6px;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+}
+.card-story, .card-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #6b584a;
+  margin: 0 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-story { font-family: 'Playfair Display', serif; font-style: italic; }
+.card-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  color: #7a6858;
+  margin-bottom: 8px;
+}
+.card-stars i { color: #e69526; font-size: 9.5px; }
+.card-stars i.dim { color: #d5c5b5; }
+.card-pairing {
+  font-size: 10.5px;
+  color: #7a6858;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-pairing i { color: var(--brass); font-size: 9.5px; }
+
+.drink-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(181,122,75,.15);
+}
+.drink-meta b {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #24160e;
+}
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 100px;
+}
+
+/* Empty state */
+.menu-empty { display: none; text-align: center; padding: 60px 0; color: #7a6858; font-family: var(--mono); font-size: 13px; }
+
+/* ---- Quick View Modal ---- */
+.qv-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(36,22,14,.65);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s var(--ease);
+  padding: 20px;
+}
+.qv-modal.open { opacity: 1; visibility: visible; }
+body.modal-lock { overflow: hidden; }
+.qv-panel {
+  background: #ffffff;
+  border: 1px solid rgba(181,122,75,.25);
+  border-radius: 20px;
+  max-width: 920px;
+  width: 100%;
+  max-height: 88vh;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(40,20,10,.18);
+}
+.qv-close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  color: #24160e;
+  border: 1px solid rgba(181,122,75,.25);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.qv-media { position: relative; background: #f5ece1; }
+.qv-media img { width: 100%; height: 100%; object-fit: cover; min-height: 320px; }
+.qv-content { padding: 34px; color: #24160e; }
+.qv-content h3 { font-family: var(--display); font-size: 28px; color: #24160e; margin: 0 0 8px; }
+.qv-story { font-family: 'Playfair Display', serif; font-style: italic; color: #6b584a; font-size: 14.5px; line-height: 1.65; margin-bottom: 16px; }
+.qv-meta { display: grid; gap: 8px; margin-bottom: 14px; }
+.qv-row { display: flex; justify-content: space-between; gap: 14px; font-size: 12px; border-bottom: 1px dashed rgba(181,122,75,.16); padding-bottom: 6px; }
+.qv-row span { color: #7a6858; }
+.qv-row b { color: #24160e; text-align: right; }
+.qv-pairing { font-family: var(--mono); font-size: 11px; color: #945620; margin-bottom: 16px; }
+.qv-reviews { border-top: 1px solid rgba(181,122,75,.18); padding-top: 14px; margin-bottom: 18px; }
+.qv-review { margin-bottom: 10px; font-size: 12px; }
+.qv-review b { color: #24160e; margin-right: 8px; }
+.qv-review span { color: #c88636; font-size: 10px; }
+.qv-review p { margin: 3px 0 0; color: #6b584a; }
+@media(max-width:900px){ .qv-panel { grid-template-columns: 1fr; } .qv-media img { min-height: 220px; } }
+
+/* ---- Build Your Own Coffee ---- */
+.builder-section {
+  background: #ffffff;
+  border: 1px solid rgba(181,122,75,.25);
+  border-radius: 24px;
+  padding: 48px;
+  margin-top: 60px;
+  box-shadow: 0 10px 35px rgba(70,40,20,.06);
+  color: #24160e;
+}
+.builder-section h2 { font-family: var(--display); font-size: clamp(28px, 3.8vw, 42px); color: #24160e; margin: 0 0 8px; }
+.builder-section .lede { color: #5c473a; max-width: 560px; margin-bottom: 32px; font-size: 15px; }
+.builder-group { margin-bottom: 22px; }
+.builder-group label { display: block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #945620; margin-bottom: 9px; }
+.builder-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.builder-opt { border: 1px solid rgba(181,122,75,.22); background: #faf7f2; color: #5c473a; border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.builder-opt:hover { border-color: var(--brass); color: #24160e; }
+.builder-opt.active { background: var(--brass); color: #ffffff; border-color: var(--brass); }
+.recipe-card { margin-top: 34px; padding: 30px; border: 1px solid rgba(200,134,54,.3); border-radius: 16px; background: #faf7f2; color: #24160e; }
+.recipe-card.revealed { opacity: 1; transform: none; display: block; }
+@media(max-width:767px){ .builder-section { padding: 24px; } }

@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Coffee Collection · Coffee Darbar</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="style.css?v=3.1"><link rel="stylesheet" href="menu.css?v=3.1">  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="darbar-theme.css?v=1">
+  <link rel="stylesheet" href="darbar-ui.css?v=6">
+  <link rel="stylesheet" href="darbar-menu.css?v=8">
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+</head>
+<body class="menu-3d">
+<canvas id="gl" aria-hidden="true"></canvas>
+<nav class="navbar navbar-expand-lg fixed-top hardi-nav"><div class="container-fluid px-4 px-lg-5"><a class="brand" href="index.html" data-testid="nav-brand"><span class="brand-mark">C</span><span class="brand-title-wrap"><span class="brand-aesthetic">Coffee</span><span class="brand-sub">DARBAR</span></span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="nav"><ul class="navbar-nav mx-auto gap-lg-3"><li><a class="nav-link" href="index.html">Home</a></li><li><a class="nav-link" href="about.html">Our story</a></li><li><a class="nav-link active" href="menu.html">Menu</a></li><li><a class="nav-link" href="index.html#telemetry">Telemetry</a></li><li><a class="nav-link" href="passport.html">Passport</a></li><li><a class="nav-link" href="reservation.html">Reservations</a></li><li><a class="nav-link" href="contact.html">Contact</a></li></ul><div class="nav-actions"><button class="sound-toggle-btn me-2" id="soundToggleBtn" aria-label="Toggle Luxury Audio" title="Mute/Unmute Audio"><i class="fa-solid fa-volume-high"></i></button><a href="order.html" class="nav-cart">Cart <span id="cartCount">0</span></a><a href="order.html" class="btn btn-brass btn-sm">Order ahead</a></div></div></div></nav>
+<main>
+<section class="inner-hero collection-hero"><div class="container-fluid px-4 px-lg-5">
+  <div class="collection-intro">
+    <div class="eyebrow"><span class="pulse-dot"></span> The Coffee Collection</div>
+    <h1 data-mask-reveal>Sixteen ways to <span class="gradient-text">fall in love</span> with coffee.</h1>
+    <p>Every cup here has a story, an origin, and an opinion. Browse slow — this isn't a menu, it's a catalogue.</p>
+  </div>
+
+  <div class="barista-note" data-testid="barista-note">
+    <span class="bn-label">Barista's note · today</span>
+    <p id="baristaNoteText"></p>
+  </div>
+
+  <div class="filter-row" id="filterRow" data-testid="filter-row"></div>
+  <div class="menu-search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="menuSearch" placeholder="Search the collection…" data-testid="menu-search-input"></div>
+
+  <div class="dietary-bar-wrap" id="dietaryBarWrap" data-testid="dietary-bar-wrap">
+    <div class="dietary-bar-label"><i class="fa-solid fa-shield-heart"></i> Mindful & Ethical Filters:</div>
+    <div class="dietary-chip-row" id="dietaryChipRow" data-testid="dietary-chip-row"></div>
+    <button class="dietary-clear-btn hidden" id="clearDietaryBtn" data-testid="clear-dietary-btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+  </div>
+
+  <div id="tier1Section">
+    <div class="tier-header"><h2>Signature Collection</h2><span>Flagship · 6 drinks</span></div>
+    <div class="tier1-grid" id="tier1Grid" data-testid="tier1-grid"></div>
+  </div>
+
+  <div id="tier2Section">
+    <div class="tier-header"><h2>House Favourites</h2><span>The everyday classics</span></div>
+    <div class="tier2-grid" id="tier2Grid" data-testid="tier2-grid"></div>
+  </div>
+
+  <div id="tier3Section">
+    <div class="tier-header"><h2>Bakery &amp; Bites</h2><span>Fresh every morning</span></div>
+    <div class="tier3-grid" id="tier3Grid" data-testid="tier3-grid"></div>
+  </div>
+
+  <p class="menu-empty" id="menuEmpty">No drinks match that search — try another word or filter.</p>
+
+  <div class="builder-section" id="builderSection" data-testid="builder-section">
+    <span class="recipe-eyebrow">Darbar AI · Build Your Own</span>
+    <h2>Design your own coffee.</h2>
+    <p class="lede">Pick your base, milk, sweetness, and flavor — Darbar AI names it, writes its story, and pairs it with a dessert, a mood, a book, and a song.</p>
+    <div class="builder-group"><label>Base</label><div class="builder-opts" id="opt-base"></div></div>
+    <div class="builder-group"><label>Milk</label><div class="builder-opts" id="opt-milk"></div></div>
+    <div class="builder-group"><label>Sweetener</label><div class="builder-opts" id="opt-sweetener"></div></div>
+    <div class="builder-group"><label>Flavor</label><div class="builder-opts" id="opt-flavor"></div></div>
+    <div class="builder-group"><label>Strength</label><div class="builder-opts" id="opt-strength"></div></div>
+    <div class="builder-group"><label>Temperature</label><div class="builder-opts" id="opt-temperature"></div></div>
+    <div class="builder-group"><label>Roast</label><div class="builder-opts" id="opt-roast"></div></div>
+    <div class="builder-group"><label>Cup size</label><div class="builder-opts" id="opt-cupSize"></div></div>
+    <div class="builder-group"><label>Toppings <small>(pick any)</small></label><div class="builder-opts" id="opt-toppings"></div></div>
+    <button class="btn btn-brass builder-generate" id="generateCoffeeBtn" data-testid="generate-coffee-button">Generate my coffee <i class="fa-solid fa-wand-magic-sparkles"></i></button>
+    <div class="recipe-card" id="recipeCard" data-testid="recipe-card"></div>
+  </div>
+
+</div></section>
+</main>
+
+<div class="qv-modal" id="quickViewModal" data-testid="quick-view-modal" role="dialog" aria-modal="true" aria-labelledby="qvName">
+  <div class="qv-panel">
+    <button class="qv-close" id="qvClose" data-testid="qv-close-button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="qv-media"><img id="qvImg" src="" alt=""><span class="qv-price" id="qvPrice"></span></div>
+    <div class="qv-content">
+      <span class="qv-kicker" id="qvKicker"></span>
+      <h3 id="qvName"></h3>
+      <div class="card-stars" id="qvStars"></div>
+      <p class="qv-story" id="qvStory"></p>
+      <div class="qv-meta" id="qvMeta"></div>
+      <div class="qv-pairing" id="qvPairing"></div>
+    </div>
+    <div class="qv-side">
+      <div id="qvSensory"></div>
+      <div class="qv-reviews" id="qvReviews"></div>
+      <button class="btn btn-brass" id="qvAddBtn" data-testid="qv-add-to-cart-button"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script><script src="darbar-chrome.js?v=6"></script><script src="darbar-motion.js?v=5"></script><script src="sound.js?v=4"></script><script src="script.js?v=3.1"></script><script src="menu-data.js?v=4"></script><script src="menu.js?v=10"></script><script type="module" src="darbar-3d.js?v=20"></script>
+</body></html>

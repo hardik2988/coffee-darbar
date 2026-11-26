@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Coffee Passport · Coffee Darbar</title><meta name="description" content="Five origins, five stories — explore the farms and farmers behind every Coffee Darbar cup."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="style.css?v=2.2"><link rel="stylesheet" href="passport.css?v=2.2">  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="darbar-theme.css?v=1">
+  <link rel="stylesheet" href="darbar-ui.css?v=6">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top hardi-nav"><div class="container-fluid px-4 px-lg-5"><a class="brand" href="index.html" data-testid="nav-brand"><span class="brand-mark">C</span><span class="brand-title-wrap"><span class="brand-aesthetic">Coffee</span><span class="brand-sub">DARBAR</span></span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="nav"><ul class="navbar-nav mx-auto gap-lg-3"><li><a class="nav-link" href="index.html">Home</a></li><li><a class="nav-link" href="about.html">Our story</a></li><li><a class="nav-link" href="menu.html">Menu</a></li><li><a class="nav-link active" href="passport.html">Passport</a></li><li><a class="nav-link" href="reservation.html">Reservations</a></li><li><a class="nav-link" href="contact.html">Contact</a></li></ul><div class="nav-actions"><a href="order.html" class="nav-cart">Cart <span id="cartCount">0</span></a><a href="order.html" class="btn btn-brass btn-sm">Order ahead</a></div></div></div></nav>
+
+<main>
+  <section class="passport-cover" data-testid="passport-cover">
+    <div class="passport-cover-inner">
+      <span class="eyebrow">Coffee Darbar presents</span>
+      <h1 class="passport-title">Coffee<br>Passport</h1>
+      <p class="passport-sub">Five origins. Five stories. One journey from soil to soul — stamped as you go.</p>
+      <button class="btn btn-brass" id="beginJourneyBtn" data-testid="passport-begin-button">Begin the journey <i class="fa-solid fa-stamp"></i></button>
+      <div class="passport-visited-count" data-testid="passport-visited-count"><span id="visitedCount">0</span> / 5 origins stamped</div>
+    </div>
+  </section>
+
+  <section class="passport-book" id="passportBook" data-testid="passport-book">
+    <div class="container-fluid px-4 px-lg-5">
+      <div class="origin-tabs" id="originTabs" data-testid="origin-tabs"></div>
+
+      <div class="passport-page" id="passportPage" data-testid="passport-page">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5 passport-page-left">
+            <div class="passport-photo-wrap">
+              <img id="originPhoto" src="" alt="" loading="lazy">
+              <div class="passport-stamp" id="passportStamp" data-testid="passport-stamp"><i class="fa-solid fa-stamp"></i><span>STAMPED</span></div>
+            </div>
+            <button class="btn btn-brass w-100 mt-3 stamp-action-btn" id="stampOriginBtn" data-testid="stamp-origin-btn">
+              <i class="fa-solid fa-stamp"></i> Stamp this Origin
+            </button>
+          </div>
+          <div class="col-lg-7 passport-page-right">
+            <span class="tag" id="pOriginTag" data-testid="passport-tag"></span>
+            <h2 id="pCountryName" data-testid="passport-country-name"></h2>
+            <span class="region" id="pRegion"></span>
+            <p class="passport-story" id="pFarmerStory" data-testid="passport-farmer-story"></p>
+            <div class="passport-data-grid" id="pDataGrid" data-testid="passport-data-grid"></div>
+            <div class="flavor-wheel-wrap">
+              <span class="fw-label">Flavor profile</span>
+              <canvas id="flavorWheel" width="280" height="280" data-testid="flavor-wheel-canvas"></canvas>
+            </div>
+            <div class="altitude-slider-card mt-4" id="altitudeCard" data-testid="altitude-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="alt-label"><i class="fa-solid fa-mountain"></i> Coffee Belt Elevation Explorer</span>
+                <b class="alt-val" id="altGaugeVal">1,950 masl</b>
+              </div>
+              <input type="range" class="alt-range" id="altRange" min="800" max="2300" step="50" value="1950">
+              <div class="d-flex justify-content-between alt-ticks">
+                <span>800m (Lowland)</span>
+                <span>1,500m (Highland)</span>
+                <span>2,300m (Alpine)</span>
+              </div>
+              <div class="alt-intel mt-2" id="altIntelText">
+                <b>High-Altitude Maturation:</b> Thinner mountain air and sharp diurnal temperature swings preserve dense sugars, sparkling acidity, and floral aromatics.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><div class="container-fluid px-4 px-lg-5"><div class="footer-top"><a class="brand" href="index.html"><span class="brand-mark">C</span><span>COFFEE<span class="brand-muted">DARBAR</span></span></a><p>Coffee with character.<br>Refined by curiosity.</p><div class="footer-links"><a href="about.html">Our story</a><a href="contact.html">Get in touch</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div><div class="footer-bottom"><span>© 2025 Coffee Darbar · A UPES capstone</span><span>Made for the curious <i class="fa-solid fa-star"></i></span></div></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script><script src="darbar-chrome.js?v=6"></script><script src="darbar-motion.js?v=4"></script><script src="script.js"></script><script src="passport-data.js"></script><script src="passport.js"></script>
+</body></html>

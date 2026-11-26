@@ -1,0 +1,79 @@
+/* ================= Coffee Darbar — Coffee Passport ================= */
+
+/* ---- luxury cover ---- */
+.passport-cover{position:relative;min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:170px 24px 90px;overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(200,134,54,.12), transparent 45%),
+    radial-gradient(circle at 82% 78%, rgba(200,134,54,.08), transparent 40%),
+    linear-gradient(180deg,#faf7f2 0%,#f5efe6 100%);
+  border-bottom:1px solid rgba(181,122,75,.2);
+}
+.passport-cover-inner{position:relative;max-width:680px}
+.passport-cover .eyebrow{color:var(--brass);font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.passport-title{font-family:var(--display);font-weight:700;font-size:clamp(56px,8vw,120px);line-height:.96;letter-spacing:-.03em;margin:22px 0 24px;
+  background:linear-gradient(180deg,#24160e 0%,#8d5b2d 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.passport-sub{color:#6c584c;font-size:16px;line-height:1.8;max-width:520px;margin:0 auto 38px}
+.passport-visited-count{margin-top:26px;color:#7a6858;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.passport-visited-count span{color:var(--brass);font-weight:700}
+
+/* ---- the book (warm ivory inner pages) ---- */
+.passport-book{background:#f3e9d8;color:#241710;padding:70px 0 100px;position:relative}
+.passport-book::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(180deg,rgba(21,13,7,.35),transparent)}
+
+.origin-tabs{display:flex;gap:12px;overflow-x:auto;padding-bottom:28px;margin-bottom:38px;border-bottom:1px solid rgba(36,23,16,.14)}
+.origin-tab{flex:0 0 auto;display:flex;align-items:center;gap:9px;background:#fff;border:1px solid rgba(36,23,16,.12);border-radius:100px;padding:11px 20px 11px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#5c4a38;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.origin-tab i{font-size:13px;color:#b5793f}
+.origin-tab .stamped-badge{display:none;color:#1f7a3f;font-size:11px}
+.origin-tab.is-visited .stamped-badge{display:inline-block}
+.origin-tab:hover{border-color:#c9973f;box-shadow:0 6px 18px rgba(36,23,16,.08)}
+.origin-tab.active{background:#241710;color:#f3e9d8;border-color:#241710}
+.origin-tab.active i{color:var(--brass)}
+
+.passport-page{background:#fffaf0;border:1px solid rgba(36,23,16,.1);border-radius:18px;padding:52px;box-shadow:0 30px 60px rgba(36,23,16,.12);position:relative}
+.passport-page::before{content:'';position:absolute;left:38px;top:0;bottom:0;width:1px;background:repeating-linear-gradient(to bottom,rgba(36,23,16,.18) 0 6px,transparent 6px 12px)}
+.passport-page-left{padding-left:20px}
+.passport-photo-wrap{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/5;border:6px solid #fff;box-shadow:0 18px 40px rgba(36,23,16,.2)}
+.passport-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92)}
+.passport-stamp{position:absolute;top:18px;right:18px;width:96px;height:96px;border-radius:50%;border:3px solid #b3211f;color:#b3211f;background:rgba(255,250,240,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;transform:rotate(-14deg) scale(0);opacity:0;mix-blend-mode:multiply;pointer-events:none}
+.passport-stamp i{font-size:22px}
+.passport-stamp.is-shown{transform:rotate(-14deg) scale(1);opacity:.88}
+
+.passport-page-right{padding-right:8px}
+.passport-page-right .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a9711f;border:1px solid rgba(169,113,31,.35);border-radius:100px;padding:5px 12px;margin-bottom:16px}
+.passport-page-right h2{font-family:var(--display);font-weight:700;font-size:clamp(30px,4vw,46px);letter-spacing:-.02em;margin:0 0 6px;color:#1c130c}
+.passport-page-right .region{color:#8a725a;font-size:13px;margin-bottom:20px;display:block}
+.passport-story{color:#4a3a2c;font-size:15px;line-height:1.85;margin-bottom:28px}
+
+.passport-data-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px;margin-bottom:34px}
+.passport-data-item{border-top:1px solid rgba(36,23,16,.12);padding-top:10px}
+.passport-data-item span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a9916f;margin-bottom:5px}
+.passport-data-item strong{font-size:14px;color:#241710;font-weight:600}
+.passport-flavor-chips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.passport-flavor-chips span{background:#241710;color:#f3e9d8;font-size:11px;padding:6px 13px;border-radius:100px}
+
+.flavor-wheel-wrap{text-align:center;background:#fff;border:1px solid rgba(36,23,16,.1);border-radius:14px;padding:24px}
+.fw-label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#a9916f;margin-bottom:10px}
+#flavorWheel{max-width:100%}
+
+@media(max-width:991px){.passport-page{padding:34px}.passport-page::before{display:none}.passport-page-left{padding-left:0}}
+@media(max-width:575px){.passport-data-grid{grid-template-columns:1fr}.passport-cover{padding:150px 18px 70px}}
+
+/* ---------- Tactile Stamp Action & Ink Particles ---------- */
+.stamp-action-btn{box-shadow:0 8px 24px rgba(212,175,55,.25);transition:all .25s ease}
+.stamp-action-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(212,175,55,.35)}
+.stamp-action-btn.btn-stamped{background:#1f7a3f;border-color:#1f7a3f;color:#fff;cursor:default;box-shadow:none}
+
+.ink-particle{position:absolute;top:50%;left:50%;width:5px;height:5px;background:#b3211f;border-radius:50%;pointer-events:none;z-index:10;animation:inkBurst .65s ease-out forwards}
+@keyframes inkBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* ---------- Interactive Altitude Gauge & Coffee Belt Explorer ---------- */
+.altitude-slider-card{background:#fff;border:1px solid rgba(36,23,16,.1);border-radius:14px;padding:22px}
+.alt-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#a9916f;display:flex;align-items:center;gap:6px}
+.alt-val{font-family:var(--mono);font-size:13px;color:#241710;font-weight:700}
+.alt-range{width:100%;-webkit-appearance:none;height:6px;border-radius:100px;background:linear-gradient(90deg,#8d6e63 0%,#d4af37 55%,#5499c7 100%);outline:none;cursor:pointer;margin:12px 0 6px}
+.alt-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#241710;border:2px solid #d4af37;box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer;transition:transform .15s}
+.alt-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
+.alt-ticks{font-family:var(--mono);font-size:9.5px;color:#9b8f82}
+.alt-intel{font-size:12px;color:#4a3a2c;line-height:1.55;background:#fcf8f2;border:1px solid rgba(36,23,16,.08);border-radius:8px;padding:12px 14px}
+.alt-intel b{color:#241710}

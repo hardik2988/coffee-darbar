@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coffee Darbar — Where every cup gets the royal treatment</title>
+  <meta name="description" content="Coffee Darbar — hand-roasted specialty coffee, slow-pulled and served the royal way at UPES Dehradun.">
+  <meta property="og:title" content="Coffee Darbar — Where every cup gets the royal treatment">
+  <meta name="theme-color" content="#140b07">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="darbar.css?v=12">
+  <link rel="stylesheet" href="darbar-ui.css?v=6">
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body class="is-loading">
+
+  <!-- Intro: a porcelain cup lands on its saucer, a drop of coffee falls in and fills it,
+       steam rises — then the coffee surface expands to fill the screen and reveals the site. -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="intro-art" viewBox="0 0 400 400" role="presentation">
+        <defs>
+          <linearGradient id="iPorc" x1="0" x2="1"><stop offset="0" stop-color="#fffdf8"/><stop offset=".45" stop-color="#f6efe3"/><stop offset="1" stop-color="#cdbfa6"/></linearGradient>
+          <linearGradient id="iGold" x1="0" x2="1"><stop offset="0" stop-color="#f3dca6"/><stop offset=".5" stop-color="#c9a15f"/><stop offset="1" stop-color="#a87e3e"/></linearGradient>
+          <radialGradient id="iCoffee" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#b9783f"/><stop offset=".45" stop-color="#7a4421"/><stop offset="1" stop-color="#2e160a"/></radialGradient>
+          <radialGradient id="iShadow"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+          <linearGradient id="iGoldU" gradientUnits="userSpaceOnUse" x1="40" y1="0" x2="360" y2="360"><stop offset="0" stop-color="#f3dca6"/><stop offset=".5" stop-color="#c9a15f"/><stop offset="1" stop-color="#a87e3e"/></linearGradient>
+          <clipPath id="iMouth"><ellipse cx="200" cy="200" rx="74" ry="11"/></clipPath>
+        </defs>
+        <ellipse class="i-shadow" cx="200" cy="336" rx="150" ry="18" fill="url(#iShadow)"/>
+        <!-- the jharokha draws itself around the cup (Coffee Darbar's mark) -->
+        <g class="i-jharokha" fill="none" stroke="url(#iGoldU)" stroke-linecap="round">
+          <path class="i-arch" pathLength="1" d="M52 342V180C52 120 110 92 150 70 178 55 193 40 200 26 207 40 222 55 250 70 290 92 348 120 348 180V342" stroke-width="3"/>
+          <path class="i-arch i-arch-in" pathLength="1" d="M70 342V184C70 132 120 106 156 86 180 73 193 60 200 48 207 60 220 73 244 86 280 106 330 132 330 184V342" stroke-width="1.4"/>
+          <path class="i-ledge" pathLength="1" d="M30 346H370" stroke-width="3"/>
+          <path class="i-ledge" pathLength="1" d="M44 357H356" stroke-width="1.5"/>
+          <path class="i-finial" d="M200 4 207 15 200 26 193 15Z" fill="url(#iGoldU)" stroke="none"/>
+        </g>
+        <!-- saucer -->
+        <g class="i-saucer">
+          <ellipse cx="200" cy="320" rx="128" ry="20" fill="url(#iPorc)"/>
+          <ellipse cx="200" cy="318" rx="128" ry="20" fill="none" stroke="url(#iGold)" stroke-width="1.6"/>
+          <ellipse cx="200" cy="316" rx="62" ry="8" fill="#e6dbc7"/>
+        </g>
+        <!-- cup -->
+        <g class="i-cup">
+          <path d="M272 222 C318 214 324 270 268 280" fill="none" stroke="url(#iGold)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M120 200 C120 272 152 314 200 314 C248 314 280 272 280 200 Z" fill="url(#iPorc)"/>
+          <path d="M128 236 C162 252 238 252 272 236" fill="none" stroke="url(#iGold)" stroke-width="1.2" opacity=".85"/>
+          <path d="M186 262 l3 -9 l6 6 l5 -10 l5 10 l6 -6 l3 9 z" fill="url(#iGold)"/>
+          <ellipse cx="200" cy="200" rx="80" ry="14" fill="#efe5d3"/>
+          <g clip-path="url(#iMouth)">
+            <ellipse cx="200" cy="204" rx="74" ry="12" fill="#d8cbb4"/>
+            <ellipse class="i-coffee" cx="200" cy="202" rx="76" ry="12" fill="url(#iCoffee)"/>
+            <ellipse class="i-crema" cx="196" cy="200" rx="30" ry="4" fill="#e9c896" opacity=".55"/>
+          </g>
+          <ellipse cx="200" cy="200" rx="80" ry="14" fill="none" stroke="url(#iGold)" stroke-width="2.4"/>
+        </g>
+        <!-- the drop and its splash -->
+        <path class="i-drop" d="M200 120 C212 136 214 146 200 152 C186 146 188 136 200 120 Z" fill="#3a1d0e"/>
+        <g class="i-splash" fill="#5a2f15">
+          <circle cx="200" cy="196" r="4"/><circle cx="200" cy="196" r="3"/><circle cx="200" cy="196" r="3.5"/>
+          <circle cx="200" cy="196" r="2.5"/><circle cx="200" cy="196" r="3"/><circle cx="200" cy="196" r="2"/>
+        </g>
+        <!-- steam rises as a crown (the Coffee Darbar mark), then jewels set on its points -->
+        <g class="i-steam" fill="none" stroke="#f3e2c4" stroke-linecap="round" stroke-linejoin="round">
+          <path class="i-band" pathLength="1" d="M165.5 174.0Q200.0 163.9 234.5 174.0" stroke-width="2.5"/>
+          <path class="i-crown" pathLength="1" d="M165.5 172.2C158.6 151.9 174.7 135.8 167.8 115.1 176.1 124.3 181.6 135.8 185.3 145.5 188.5 124.3 197.7 110.5 200.0 92.1 202.3 110.5 211.5 124.3 214.7 145.5 218.4 135.8 223.9 124.3 232.2 115.1 225.3 135.8 241.4 151.9 234.5 172.2" stroke-width="3.2"/>
+          <path class="i-wisp" d="M200 76C195.5 69 204.5 64 200 56" stroke-width="2.1"/>
+        </g>
+        <g class="i-jewels" fill="url(#iGoldU)"><circle cx="167.8" cy="107.8" r="4.4"/><circle cx="200" cy="83.8" r="5"/><circle cx="232.2" cy="107.8" r="4.4"/></g>
+      </svg>
+      <div class="loader-word" aria-label="Coffee Darbar">
+        <span class="lw-top">Coffee</span>
+        <span class="lw-main"><span>D</span><span>a</span><span>r</span><span>b</span><span>a</span><span>r</span></span>
+      </div>
+      <div class="loader-bar"><span id="loaderBar"></span></div>
+      <div class="loader-note">Slow-pouring your first cup</div>
+    </div>
+    <!-- exit: the coffee surface grows to fill the screen -->
+    <div class="loader-iris" id="loaderIris"></div>
+  </div>
+
+  <!-- One shared WebGL canvas renders every 3D cup on the page -->
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- The header is built by darbar-chrome.js (shared with every page) -->
+
+  <main>
+    <!-- 1 · HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <!-- Jharokha steam crown, large and faint: the palace window frames the 3D cup and
+           the cup's steam rises toward the crown under the arch -->
+      <svg class="hero-jharokha" viewBox="0 -9 100 125" preserveAspectRatio="xMidYMax meet" fill="none" stroke-linecap="round" aria-hidden="true">
+        <defs>
+          <linearGradient id="hjFade" gradientUnits="userSpaceOnUse" x1="0" y1="-9" x2="0" y2="116">
+            <stop offset="0" stop-color="#f3dca6"/><stop offset=".42" stop-color="#c9a15f" stop-opacity=".75"/><stop offset=".72" stop-color="#a87e3e" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g stroke="url(#hjFade)">
+          <path class="hj-finial" d="M50 -8.5 52.2 -4.8 50 -1.1 47.8 -4.8Z" fill="url(#hjFade)" stroke-width=".25"/>
+          <path class="hj-line" pathLength="1" d="M4 116V46C4 32 18 25 30 18 39 13 46 8 50 1 54 8 61 13 70 18 82 25 96 32 96 46V116" stroke-width=".34"/>
+          <path class="hj-line hj-inner" pathLength="1" d="M10 116V47.5C10 36 22 30 32.5 24 40 19.8 46 15.5 50 9.5 54 15.5 60 19.8 67.5 24 78 30 90 36 90 47.5V116" stroke-width=".2"/>
+          <path class="hj-beads" d="M15.5 116V49C15.5 39.5 26 34 35 29 41.5 25.5 46.5 21.5 50 17 53.5 21.5 58.5 25.5 65 29 74 34 84.5 39.5 84.5 49V116" stroke-width=".55" stroke-dasharray="0 2.3"/>
+          <g class="hj-crown" transform="translate(50 37) scale(.9) translate(-32 -46.8)">
+            <path d="M24.5 46.8Q32 44.6 39.5 46.8" stroke-width=".3"/>
+            <path class="hj-steam" pathLength="1" d="M24.5 46.4C23 42 26.5 38.5 25 34 26.8 36 28 38.5 28.8 40.6 29.5 36 31.5 33 32 29 32.5 33 34.5 36 35.2 40.6 36 38.5 37.2 36 39 34 37.5 38.5 41 42 39.5 46.4" stroke-width=".36"/>
+            <g class="hj-jewels" fill="#f3dca6" stroke="none"><circle cx="25" cy="32.4" r=".75"/><circle cx="32" cy="27.2" r=".85"/><circle cx="39" cy="32.4" r=".75"/></g>
+          </g>
+        </g>
+      </svg>
+      <div class="hero-view" data-view="hero" role="img" aria-label="3D coffee cup with floating ingredients — drag to spin"></div>
+
+      <div class="hero-left">
+        <div class="rating"><span class="stars">★★★★★</span> 2,418 Royal Reviews</div>
+        <h1 class="hero-title" id="heroTitle">
+          <span class="line"><span>Royal Cappuccino</span></span>
+          <span class="line"><span>&amp; Gold-Rim Porcelain</span></span>
+        </h1>
+        <p class="hero-desc" id="heroDesc">Velvet micro-foam over a double ristretto, finished with a hand-poured heart.</p>
+        <div class="hero-actions">
+          <button class="pill pill-outline-light" id="heroOrder" data-name="Royal Cappuccino" data-price="260" data-caffeine="120">Order Now</button>
+          <span class="hero-price" id="heroPrice">₹260</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <h2 class="hero-tag">Slow Brewed, Served Royal</h2>
+        <p>Small-batch beans roasted every week.<br>Weighed to the gram, poured to order.</p>
+        <div class="thumbs" role="tablist" aria-label="Choose a drink">
+          <button class="thumb active" role="tab" aria-selected="true" data-drink="0" aria-label="Royal Cappuccino"><span class="cup-view" data-view="thumb" data-style="cappuccino"></span><i class="thumb-bar"></i></button>
+          <button class="thumb" role="tab" aria-selected="false" data-drink="1" aria-label="Iced Darbar Latte"><span class="cup-view" data-view="thumb" data-style="iced"></span><i class="thumb-bar"></i></button>
+          <button class="thumb" role="tab" aria-selected="false" data-drink="2" aria-label="Kesar Latte"><span class="cup-view" data-view="thumb" data-style="saffron"></span><i class="thumb-bar"></i></button>
+          <button class="thumb" role="tab" aria-selected="false" data-drink="3" aria-label="Mocha Maharaja"><span class="cup-view" data-view="thumb" data-style="mocha"></span><i class="thumb-bar"></i></button>
+          <button class="thumb" role="tab" aria-selected="false" data-drink="4" aria-label="Filter Kaapi"><span class="cup-view" data-view="thumb" data-style="kaapi"></span><i class="thumb-bar"></i></button>
+        </div>
+      </div>
+
+      <div class="hero-foot">
+        <div class="hero-count"><b id="heroIndex">01</b><span>/ 05</span></div>
+        <div class="scroll-cue" aria-hidden="true"><span></span>Scroll</div>
+        <div class="socials"><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></div>
+      </div>
+    </section>
+
+    <!-- 2 · GOLD MARQUEE -->
+    <section class="marquee" aria-label="What we stand for">
+      <div class="marquee-track">
+        <span>Single Origin</span><i>✦</i><span>Hand Roasted Weekly</span><i>✦</i><span>Ethically Sourced</span><i>✦</i><span>24k Gold-Rimmed Porcelain</span><i>✦</i><span>Crafted in Dehradun</span><i>✦</i>
+        <span>Single Origin</span><i>✦</i><span>Hand Roasted Weekly</span><i>✦</i><span>Ethically Sourced</span><i>✦</i><span>24k Gold-Rimmed Porcelain</span><i>✦</i><span>Crafted in Dehradun</span><i>✦</i>
+      </div>
+    </section>
+
+    <!-- 3 · STATEMENT -->
+    <section class="statement" id="story">
+      <h2 class="statement-title" data-words>Coffee without any compromise.</h2>
+      <div class="statement-grid">
+        <figure class="tilt-photo reveal">
+          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=80" alt="Warm café interior with guests" loading="lazy">
+        </figure>
+        <div class="statement-copy reveal">
+          <span class="kicker">The Darbar Way</span>
+          <h3>Brewed slow.<br>Served <em>grand.</em></h3>
+          <p>We roast in small batches every week, weigh every shot to the gram, and pour it into porcelain worthy of a royal court — so every cup feels like an occasion, not a habit.</p>
+          <div class="cta-pair">
+            <a class="pill pill-round" href="about.html" aria-label="Read our story"><i class="fa-solid fa-arrow-right arrow-ne"></i></a>
+            <a class="pill pill-solid" href="about.html">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · THE LINEUP -->
+    <section class="lineup" id="lineup">
+      <div class="section-head reveal">
+        <h2>The Royal <span>Lineup</span></h2>
+        <div class="cta-pair">
+          <a class="pill pill-round pill-soft" href="menu.html" aria-label="View the full menu"><i class="fa-solid fa-arrow-right arrow-ne"></i></a>
+          <a class="pill pill-soft" href="menu.html">View All</a>
+        </div>
+      </div>
+
+      <div class="lineup-grid">
+        <figure class="lineup-photo reveal">
+          <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=80" alt="Barista pouring coffee" loading="lazy">
+          <figcaption><span>Signature</span>Six cups. One court.</figcaption>
+        </figure>
+
+        <article class="drink reveal">
+          <div class="drink-top"><span class="badge">Best Seller</span><span class="price">₹260</span></div>
+          <div class="cup-view" data-view="cup" data-style="cappuccino"></div>
+          <div class="drink-bottom"><h3>Royal<br>Cappuccino</h3><button class="add" data-name="Royal Cappuccino" data-price="260" data-caffeine="120" aria-label="Add Royal Cappuccino"><i class="fa-solid fa-plus"></i></button></div>
+          <p class="notes">Velvet foam · cocoa · gold-rim porcelain</p>
+        </article>
+
+        <article class="drink reveal">
+          <div class="drink-top"><span class="badge badge-dark">Strong</span><span class="price">₹220</span></div>
+          <div class="cup-view" data-view="cup" data-style="espresso"></div>
+          <div class="drink-bottom"><h3>Darbar<br>Espresso</h3><button class="add" data-name="Darbar Espresso" data-price="220" data-caffeine="130" aria-label="Add Darbar Espresso"><i class="fa-solid fa-plus"></i></button></div>
+          <p class="notes">Dark cocoa · jaggery · tiger-striped crema</p>
+        </article>
+
+        <article class="drink reveal">
+          <div class="drink-top"><span class="badge">Signature</span><span class="price">₹290</span></div>
+          <div class="cup-view" data-view="cup" data-style="saffron"></div>
+          <div class="drink-bottom"><h3>Kesar<br>Latte</h3><button class="add" data-name="Kesar Latte" data-price="290" data-caffeine="95" aria-label="Add Kesar Latte"><i class="fa-solid fa-plus"></i></button></div>
+          <p class="notes">Kashmiri saffron · cardamom · silk milk</p>
+        </article>
+
+        <article class="drink reveal">
+          <div class="drink-top"><span class="badge">Heritage</span><span class="price">₹180</span></div>
+          <div class="cup-view" data-view="cup" data-style="kaapi"></div>
+          <div class="drink-bottom"><h3>Filter<br>Kaapi</h3><button class="add" data-name="Filter Kaapi" data-price="180" data-caffeine="110" aria-label="Add Filter Kaapi"><i class="fa-solid fa-plus"></i></button></div>
+          <p class="notes">Chikmagalur beans · chicory · brass davara</p>
+        </article>
+
+        <article class="drink reveal">
+          <div class="drink-top"><span class="badge badge-dark">Indulgent</span><span class="price">₹280</span></div>
+          <div class="cup-view" data-view="cup" data-style="mocha"></div>
+          <div class="drink-bottom"><h3>Mocha<br>Maharaja</h3><button class="add" data-name="Mocha Maharaja" data-price="280" data-caffeine="105" aria-label="Add Mocha Maharaja"><i class="fa-solid fa-plus"></i></button></div>
+          <p class="notes">70% dark chocolate · espresso · cocoa dust</p>
+        </article>
+
+        <article class="drink reveal">
+          <div class="drink-top"><span class="badge">New</span><span class="price">₹270</span></div>
+          <div class="cup-view" data-view="cup" data-style="sage"></div>
+          <div class="drink-bottom"><h3>Hazelnut<br>Flat White</h3><button class="add" data-name="Hazelnut Flat White" data-price="270" data-caffeine="115" aria-label="Add Hazelnut Flat White"><i class="fa-solid fa-plus"></i></button></div>
+          <p class="notes">Roasted hazelnut · rosetta · micro-foam</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5 · AI RECOMMENDER (Ethical AI + XAI) -->
+    <section class="ai" id="ai">
+      <div class="ai-grid">
+        <div class="ai-copy reveal">
+          <span class="kicker kicker-gold">Darbar AI · Explainable by design</span>
+          <h2>What's your<br><em>mood</em> today?</h2>
+          <p>Tap a mood and our recommender picks a cup for this exact moment. It runs entirely in your browser, uses no camera or personal data, and always shows you why it chose.</p>
+          <div class="moods" role="group" aria-label="Choose your mood">
+            <button class="mood active" data-mood="Focused">Focused</button>
+            <button class="mood" data-mood="Bright">Bright</button>
+            <button class="mood" data-mood="Slow">Slow</button>
+            <button class="mood" data-mood="Social">Social</button>
+          </div>
+        </div>
+        <div class="rec-card reveal">
+          <div class="rec-head"><span>Darbar recommends</span><span class="live"><i></i> live</span></div>
+          <div class="rec-body">
+            <div class="cup-view rec-view" data-view="cup" data-style="espresso" id="recView"></div>
+            <div class="rec-info">
+              <h3 id="recTitle">The Focus Pour</h3>
+              <p id="recDesc">Double espresso · oat milk · orange zest</p>
+              <strong id="recPrice">₹260</strong>
+              <q id="recReason">Because your brain deserves a clean runway.</q>
+            </div>
+          </div>
+          <div class="rec-foot">
+            <button class="pill pill-outline-gold" id="inspectAiBtn"><i class="fa-solid fa-brain"></i> Why this pick? (XAI)</button>
+            <button class="pill pill-gold" id="recAdd" data-name="The Focus Pour" data-price="260" data-caffeine="150">Add to order <i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · REVIEWS -->
+    <section class="reviews" id="reviews">
+      <div class="section-head reveal">
+        <h2>The Court<br>Has Spoken</h2>
+        <div class="arrows">
+          <button class="arrow" data-dir="-1" aria-label="Previous reviews"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="arrow" data-dir="1" aria-label="Next reviews"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <div class="review-track" id="reviewTrack">
+        <article class="review"><div class="stars">★★★★★</div><h3>Pure luxury</h3><p>“The cappuccino arrives on gold-rimmed porcelain and tastes even better than it looks. Velvet foam, zero bitterness.”</p><footer><b>Ananya R.</b><span>Verified guest</span></footer></article>
+        <article class="review"><div class="stars">★★★★★</div><h3>Best filter kaapi</h3><p>“Served in a proper brass davara, frothy and strong. Reminds me of home in Bengaluru — but somehow fancier.”</p><footer><b>Karthik S.</b><span>Verified guest</span></footer></article>
+        <article class="review"><div class="stars">★★★★★</div><h3>The Kesar Latte!</h3><p>“Saffron and coffee should not work this well. Delicate, floral and warm. I come back for it every week.”</p><footer><b>Meher K.</b><span>Verified guest</span></footer></article>
+        <article class="review"><div class="stars">★★★★★</div><h3>Smart, not creepy</h3><p>“Loved that the mood recommender explains itself and doesn't track me. It suggested exactly what I needed.”</p><footer><b>Shreya P.</b><span>Design student</span></footer></article>
+        <article class="review"><div class="stars">★★★★★</div><h3>Worth every rupee</h3><p>“Strong espresso with tiger-striped crema. The space feels like a palace lounge. My new study spot.”</p><footer><b>Arjun D.</b><span>Verified guest</span></footer></article>
+        <article class="review"><div class="stars">★★★★★</div><h3>Royal treatment</h3><p>“Staff remembered my order on my second visit. Small details everywhere — even the spoons are gold.”</p><footer><b>Nisha T.</b><span>Verified guest</span></footer></article>
+      </div>
+    </section>
+
+    <!-- 7 · SPLASH -->
+    <section class="splash" id="splash">
+      <div class="splash-view" data-view="splash" role="img" aria-label="Animated coffee bean dropping into a cup"></div>
+      <div class="splash-copy reveal">
+        <span class="kicker">Every day, every cup</span>
+        <h2>Royal coffee<br>made for<br>everyday.</h2>
+        <div class="cta-pair">
+          <a class="pill pill-round" href="menu.html" aria-label="Open the menu"><i class="fa-solid fa-arrow-right arrow-ne"></i></a>
+          <a class="pill pill-solid" href="menu.html">Explore the Menu</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · THE RIGHT WAY -->
+    <section class="rightway" id="rightway">
+      <div class="rightway-copy reveal">
+        <h2>We brew coffee<br>the right way.</h2>
+        <p>Crafted for slow mornings and busy afternoons alike — balanced, honest and impossible to rush.</p>
+        <ul class="chips">
+          <li class="yes">100% Arabica</li>
+          <li class="yes">Real Creamy Milk</li>
+          <li class="yes">Fair-Trade Farmers</li>
+          <li class="no">No Artificial Flavours</li>
+          <li class="no">No Added Preservatives</li>
+          <li class="no">No Stale Beans</li>
+        </ul>
+      </div>
+      <div class="stats reveal">
+        <div><strong data-count="17">0</strong><span>Origin stories</span></div>
+        <div><strong data-count="4.9" data-decimals="1">0</strong><span>Guest rating</span></div>
+        <div><strong data-count="9">0</strong><span>Minute pickup</span></div>
+        <div><strong data-count="100">0</strong><span>% Good energy</span></div>
+      </div>
+    </section>
+
+    <!-- 9 · JOURNEY -->
+    <section class="journey">
+      <p class="journey-text reveal">Our journey began with a <em>single cup</em> of coffee — and a simple belief that everyday coffee deserves a royal welcome.</p>
+      <div class="journey-grid">
+        <img class="reveal" src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=900&q=80" alt="Coffee bar counter" loading="lazy">
+        <div class="journey-copy reveal">
+          <p>Coffee Darbar was created with one goal: to make specialty coffee feel grand without making it complicated. We source thoughtfully, roast carefully, and serve every cup like it's for a guest of honour.</p>
+          <div class="cta-pair">
+            <a class="pill pill-round" href="about.html" aria-label="About us"><i class="fa-solid fa-arrow-right arrow-ne"></i></a>
+            <a class="pill pill-solid" href="about.html">About Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-cols">
+      <div><h4>Visit</h4><p>UPES Campus, Bidholi<br>Dehradun, Uttarakhand</p><p>Open daily · 7am – 10pm</p></div>
+      <div><h4>Explore</h4><a href="menu.html">The Menu</a><a href="reservation.html">Reserve a Table</a><a href="passport.html">Coffee Passport</a><a href="about.html">Our Story</a></div>
+      <div><h4>Darbar Dispatch</h4><p>One considered email, every Friday.</p>
+        <form class="news" id="newsForm"><label class="sr-only" for="newsEmail">Email address</label><input id="newsEmail" type="email" placeholder="you@example.com" required><button class="pill pill-gold" type="submit">Join</button></form>
+      </div>
+    </div>
+    <div class="footer-word" aria-hidden="true"><span class="fw-top">Coffee</span><span class="fw-main">Darbar</span></div>
+    <div class="footer-bottom"><span>© 2026 Coffee Darbar · A UPES capstone</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-label="Your order" aria-hidden="true">
+    <div class="drawer-head"><h3>Your Order</h3><button class="icon-btn" id="drawerClose" aria-label="Close order"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="drawer-items" id="drawerItems"></div>
+    <div class="drawer-foot">
+      <div class="caffeine"><span>Caffeine today</span><b id="caffeineTotal">0 mg</b><div class="meter"><i id="caffeineBar"></i></div><small id="caffeineNote">Well within the 400 mg daily guideline.</small></div>
+      <div class="total"><span>Total</span><b id="cartTotal">₹0</b></div>
+      <button class="pill pill-gold pill-block" id="checkoutBtn">Place Order</button>
+    </div>
+  </aside>
+
+  <!-- XAI modal -->
+  <div class="modal" id="xaiModal" role="dialog" aria-modal="true" aria-labelledby="xaiTitle" aria-hidden="true">
+    <div class="modal-panel">
+      <div class="modal-head"><span class="xai-chip"><i class="fa-solid fa-shield-halved"></i> Ethical AI · Explainability (XAI)</span><button class="icon-btn" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+      <div class="xai-banner"><small>Recommendation audit</small><h3 id="xaiTitle">The Focus Pour</h3><span id="xaiMood">Mood: Focused</span></div>
+      <div class="xai-grid">
+        <div class="xai-card"><h4><i class="fa-solid fa-clock"></i> Circadian match</h4><p id="xaiCircadian"></p><div class="xai-bar"><i id="xaiBar"></i></div><small id="xaiPct"></small></div>
+        <div class="xai-card"><h4><i class="fa-solid fa-hand-holding-heart"></i> Fair-trade sourcing</h4><p id="xaiSourcing"></p><small id="xaiCaffeine"></small></div>
+        <div class="xai-card"><h4><i class="fa-solid fa-user-shield"></i> Zero-biometrics guarantee</h4><p>Computed 100% in your browser from the mood button you tapped. No camera, no facial emotion recognition, no cookies, no profiling.</p><small class="ok"><i class="fa-solid fa-check-double"></i> Privacy by design</small></div>
+        <div class="xai-card"><h4><i class="fa-solid fa-user-gear"></i> Human in the loop</h4><p>You keep the final say. Ask our baristas to change caffeine, milk or temperature — no questions asked.</p><small class="ok"><i class="fa-solid fa-arrows-rotate"></i> Barista override always honoured</small></div>
+      </div>
+      <div class="modal-foot"><span>Darbar Algorithmic Ethics Protocol v2.4 · UPES Capstone</span><button class="pill pill-gold" data-close>Understood</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+  <script src="darbar-chrome.js?v=6"></script>
+  <script src="darbar-motion.js?v=4"></script>
+  <script src="darbar.js?v=9"></script>
+  <script src="darbar-lens.js?v=1"></script>
+  <script type="module" src="darbar-3d.js?v=20"></script>
+</body>
+</html>
