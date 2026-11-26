@@ -21,6 +21,29 @@ const easeOutBounce = t => { const n = 7.5625, d = 2.75; if (t < 1 / d) return n
 const easeInOut = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const seeded = seed => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
 
+const canvas = document.getElementById('gl');
+let renderer = null;
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
+catch (e) { document.body.classList.add('no-webgl'); signalReady(); }
+
+// Quality tier: 'low' for integrated/weak GPUs (Intel UHD/Iris, software rendering, mobile),
+// few CPU cores or little memory. Laptops with a GTX often run Chrome on the Intel chip,
+// so this is decided from the GPU Chrome actually uses.
+let TIER = 'high', TEX_SCALE = 2;
+if (renderer) {
+  const gl = renderer.getContext(), info = gl.getExtension('WEBGL_debug_renderer_info');
+  const gpu = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+  const weakGpu = /intel|uhd|hd graphics|iris|swiftshader|basic render|llvmpipe|mali|adreno|powervr|apple gpu/i.test(gpu);
+  const cores = navigator.hardwareConcurrency || 4, mem = navigator.deviceMemory || 8;
+  if (weakGpu || cores <= 4 || mem <= 4 || isSmall()) TIER = 'low';
+  TEX_SCALE = TIER === 'low' ? 1 : 2;
+  window.__darbarTier = TIER;
+}
+
+const LOW = TIER === 'low';
+// Low tier: fewer polygons (still smooth at cup size)
+const SEG = n => (LOW ? Math.max(24, Math.round(n * 0.4)) : n);
+
 function signalReady() {
   if (window.__darbar3dReady) return;
   window.__darbar3dReady = true;
@@ -248,7 +271,15 @@ const dotSprite = () => blobTexture('rgba(255,236,200,1)', 'rgba(255,210,150,0)'
 /* ================================================================== */
 /* Materials                                                           */
 /* ================================================================== */
-const phys = o => new THREE.MeshPhysicalMaterial(o);
+const PHYS_ONLY = ['clearcoat', 'clearcoatRoughness', 'sheen', 'sheenColor', 'sheenRoughness', 'specularColor', 'specularIntensity', 'transmission', 'thickness', 'ior', 'iridescence', 'attenuationColor', 'attenuationDistance'];
+// Low tier (Intel / mobile GPUs): MeshStandardMaterial looks almost the same at cup size
+// but skips the clearcoat + sheen layers, which cost several times more per pixel.
+const phys = o => {
+  if (!LOW) return new THREE.MeshPhysicalMaterial(o);
+  const c = { ...o }; PHYS_ONLY.forEach(k => delete c[k]);
+  if (o.clearcoat && c.roughness != null) c.roughness = Math.max(0.04, c.roughness * 0.8);
+  return new THREE.MeshStandardMaterial(c);
+};
 // Fresnel opacity: surfaces seen edge-on catch more light (like real glass),
 // surfaces facing the viewer stay almost clear.
 function fresnel(mat, faceAlpha, edgeAlpha) {
@@ -269,7 +300,7 @@ const MAT = {
   cobalt: phys({ color: 0x14245c, roughness: 0.09, clearcoat: 1, clearcoatRoughness: 0.025, sheen: 0.3, sheenColor: new THREE.Color(0x5a78d0), envMapIntensity: 1.4, side: THREE.DoubleSide }),
   celadon: phys({ color: 0xa7baa4, roughness: 0.1, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 1.25, side: THREE.DoubleSide }),
   // 24k gold leaf: warm, mirror-polished
-  gold: new THREE.MeshPhysicalMaterial({ color: 0xffc967, metalness: 1, roughness: 0.12, clearcoat: 0.4, clearcoatRoughness: 0.1, envMapIntensity: 1.35 }),
+  gold: phys({ color: 0xffc967, metalness: 1, roughness: 0.12, clearcoat: 0.4, clearcoatRoughness: 0.1, envMapIntensity: 1.35 }),
   brass: new THREE.MeshStandardMaterial({ color: 0xcf9d46, metalness: 1, roughness: 0.24, side: THREE.DoubleSide }),
   glass: fresnel(phys({ color: 0xffffff, roughness: 0.02, metalness: 0, transparent: true, opacity: 0.5, clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 2.6, side: THREE.DoubleSide, depthWrite: false }), 0.1, 1.0),
   ice: fresnel(phys({ color: 0xf4faff, emissive: 0x8fa6b8, emissiveIntensity: 0.22, roughness: 0.04, transparent: true, opacity: 0.9, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 3.2, depthWrite: false }), 0.22, 0.95),
@@ -321,7 +352,7 @@ const cupGeometry = name => geo('cup-' + name, () => {
   const p = profile(name);
   const pts = [...p.foot.slice(0, -1), ...p.bodyPts];
   pts.push([p.top - 0.004, p.h + 0.011], [p.top - p.wall * 0.5, p.h + 0.015]);
-  return new THREE.LatheGeometry(V2(pts), 160);
+  return new THREE.LatheGeometry(V2(pts), SEG(160));
 });
 // inside of the cup (always white porcelain, even under coloured glazes)
 const cupInnerGeometry = name => geo('cupin-' + name, () => {
@@ -329,13 +360,13 @@ const cupInnerGeometry = name => geo('cupin-' + name, () => {
   const pts = [[p.top - p.wall * 0.5, p.h + 0.015], [p.top - p.wall, p.h]];
   for (let i = p.bodyPts.length - 1; i >= 0; i--) { const [r, y] = p.bodyPts[i]; if (y > 0.2) pts.push([r - p.wall, y]); }
   pts.push([0.22, 0.19], [0, 0.185]);
-  return new THREE.LatheGeometry(V2(pts), 160);
+  return new THREE.LatheGeometry(V2(pts), SEG(160));
 });
 // decoration band sits just above the glaze between 48% and 80% of the height
 const bandGeometry = name => geo('band-' + name, () => {
   const p = profile(name), pts = [], y0 = p.h * 0.48, y1 = p.h * 0.8;
   for (let i = 0; i <= 24; i++) { const y = y0 + (y1 - y0) * (i / 24); pts.push([p.radiusAt(y) + 0.0025, y]); }
-  return new THREE.LatheGeometry(V2(pts), 160);
+  return new THREE.LatheGeometry(V2(pts), SEG(160));
 });
 // Sculpted handle: an ear-shaped loop with a little thumb rest on top, an oval
 // cross-section (flattened sideways), thin at the top and fuller where the fingers sit.
@@ -367,13 +398,13 @@ const saucerGeometry = () => geo('saucer', () => {
   const top = spline([[0, 0.036], [0.4, 0.037], [0.47, 0.05], [0.52, 0.062], [0.58, 0.049], [0.76, 0.052], [1.0, 0.086], [1.22, 0.13], [1.36, 0.176], [1.43, 0.206]], 60);
   const bottom = spline([[1.41, 0.214], [1.3, 0.178], [1.1, 0.128], [0.86, 0.083], [0.64, 0.047], [0.53, 0.014], [0.5, 0.001]], 40);
   const pts = [...top, [1.446, 0.216], [1.44, 0.227], ...bottom, [0.45, 0.001], [0.43, 0.016], [0, 0.019]];
-  return new THREE.LatheGeometry(V2(pts), 160);
+  return new THREE.LatheGeometry(V2(pts), SEG(160));
 });
 const SAUCER_R = 1.445;
-const torusGeo = (r, t) => geo(`torus-${r}-${t}`, () => new THREE.TorusGeometry(r, t, 16, 160));
+const torusGeo = (r, t) => geo(`torus-${r}-${t}`, () => new THREE.TorusGeometry(r, t, 16, SEG(160)));
 
 const beanGeometry = () => geo('bean', () => {
-  const g = new THREE.SphereGeometry(1, 72, 48), p = g.attributes.position, v = new THREE.Vector3();
+  const g = new THREE.SphereGeometry(1, SEG(72), SEG(48)), p = g.attributes.position, v = new THREE.Vector3();
   const cols = new Float32Array(p.count * 3), rnd = seeded(21);
   for (let i = 0; i < p.count; i++) {
     v.fromBufferAttribute(p, i);
@@ -425,7 +456,7 @@ const kaapiGeometries = () => geo('kaapi', () => {
   davara.push([1.25, 0.69]);
   for (let i = 16; i >= 0; i--) { const t = i / 16; davara.push([0.62 + 0.6 * Math.pow(t, 0.7), 0.08 + 0.6 * t]); }
   davara.push([0, 0.08]);
-  return { tumbler: new THREE.LatheGeometry(V2(tumbler), 96), davara: new THREE.LatheGeometry(V2(davara), 96) };
+  return { tumbler: new THREE.LatheGeometry(V2(tumbler), SEG(96)), davara: new THREE.LatheGeometry(V2(davara), SEG(96)) };
 });
 
 // Tall tumbler glass for the iced latte
@@ -437,14 +468,14 @@ const glassGeometry = () => geo('glass', () => {
   pts.push([GLASS.t - 0.012, GLASS.h + 0.015], [GLASS.t - GLASS.wall, GLASS.h]);
   for (let i = 10; i >= 0; i--) { const y = GLASS.base + (GLASS.h - GLASS.base) * i / 10; pts.push([glassR(y) - GLASS.wall, y]); }
   pts.push([0, GLASS.base]);
-  return new THREE.LatheGeometry(V2(pts), 128);
+  return new THREE.LatheGeometry(V2(pts), SEG(128));
 });
 const LIQ_TOP = 1.72;
 const liquidGeometry = () => geo('liquid', () => {
   const pts = [[0, GLASS.base + 0.005]];
   for (let i = 0; i <= 10; i++) { const y = GLASS.base + 0.005 + (LIQ_TOP - GLASS.base) * i / 10; pts.push([glassR(y) - GLASS.wall - 0.006, y]); }
   pts.push([0, LIQ_TOP]);
-  return new THREE.LatheGeometry(V2(pts), 96);
+  return new THREE.LatheGeometry(V2(pts), SEG(96));
 });
 
 // Soft-serve whipped cream: a tapering spiral
@@ -653,25 +684,7 @@ function buildSteam(count = 3, height = 1.1) {
 /* ================================================================== */
 /* Renderer + views                                                    */
 /* ================================================================== */
-const canvas = document.getElementById('gl');
-let renderer = null;
-try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
-catch (e) { document.body.classList.add('no-webgl'); signalReady(); }
-
-// Quality tier: 'low' for integrated/weak GPUs (Intel UHD/Iris, software rendering, mobile),
-// few CPU cores or little memory. Laptops with a GTX often run Chrome on the Intel chip,
-// so this is decided from the GPU Chrome actually uses.
-let TIER = 'high', TEX_SCALE = 2;
-if (renderer) {
-  const gl = renderer.getContext(), info = gl.getExtension('WEBGL_debug_renderer_info');
-  const gpu = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
-  const weakGpu = /intel|uhd|hd graphics|iris|swiftshader|basic render|llvmpipe|mali|adreno|powervr|apple gpu/i.test(gpu);
-  const cores = navigator.hardwareConcurrency || 4, mem = navigator.deviceMemory || 8;
-  if (weakGpu || cores <= 4 || mem <= 4 || isSmall()) TIER = 'low';
-  TEX_SCALE = TIER === 'low' ? 1 : 2;
-  window.__darbarTier = TIER;
-  start();
-}
+if (renderer) start();
 
 function start() {
   // low tier renders at the screen's own resolution; high tier may sharpen up to 1.5x
@@ -691,7 +704,8 @@ function start() {
   let introOver = !hasIntro;
   const afterIntro = fn => { if (introOver) setTimeout(fn, 0); else addEventListener('darbar:intro', () => setTimeout(fn, 700), { once: true }); };
   // swap in a real studio HDR for photographic reflections once the intro is over
-  afterIntro(() => new RGBELoader().load(HDR_URL, hdr => {
+  // (skipped on low tier: swapping the lighting rebuilds every shader mid-scroll, a visible freeze)
+  if (!LOW) afterIntro(() => new RGBELoader().load(HDR_URL, hdr => {
     hdr.mapping = THREE.EquirectangularReflectionMapping;
     env = pmrem.fromEquirectangular(hdr).texture; hdr.dispose();
     scenes.forEach(s => { s.environment = env; });
@@ -1030,19 +1044,33 @@ function start() {
     const fps = fpsFrames / fpsTime; fpsFrames = 0; fpsTime = 0;
     // never render below the screen's own sharpness — dropping under 1 made cups look jagged
     const floor = Math.min(1, devicePixelRatio || 1);
-    if (fps < 32 && dpr > floor) { dpr = Math.max(floor, dpr - 0.25); renderer.setPixelRatio(dpr); W = 0; }
+    if (fps < (LOW ? 22 : 32) && dpr > floor) { dpr = Math.max(floor, dpr - 0.25); renderer.setPixelRatio(dpr); W = 0; }
   }
 
-  let last = performance.now(), first = true, W = 0, H = 0;
+  let last = performance.now(), first = true, W = 0, H = 0, blank = false;
   function frame(now) {
+    // low tier draws at ~30 fps: half the GPU work, and the cups still move smoothly
+    if (LOW && !first && now - last < 30) { requestAnimationFrame(frame); return; }
     const dt = Math.min((now - last) / 1000, 0.1); last = now;
     if (!first && !document.hidden && introOver) adapt(dt);
     const t = now / 1000, cw = canvas.clientWidth, ch = canvas.clientHeight;
     if (cw !== W || ch !== H) { W = cw; H = ch; renderer.setSize(W, H, false); }
-    renderer.setScissorTest(false); renderer.clear(); renderer.setScissorTest(true);
+    // read every position first (one layout), then draw
+    const vis = [];
     for (const v of views) {
       const r = v.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > H || r.right < 0 || r.left > W || r.width < 2 || r.height < 2) continue;
+      vis.push([v, r]);
+    }
+    if (!vis.length) {
+      // nothing on screen: clear once, then stay idle
+      if (!blank) { renderer.setScissorTest(false); renderer.clear(); blank = true; }
+      if (first) { first = false; signalReady(); }
+      requestAnimationFrame(frame); return;
+    }
+    blank = false;
+    renderer.setScissorTest(false); renderer.clear(); renderer.setScissorTest(true);
+    for (const [v, r] of vis) {
       v.update(dt, t, r);
       const left = Math.floor(r.left), bottom = Math.floor(H - r.bottom), w = Math.ceil(r.width), h = Math.ceil(r.height);
       renderer.setViewport(left, bottom, w, h); renderer.setScissor(left, bottom, w, h);

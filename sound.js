@@ -100,8 +100,10 @@
   // 3. Card & Paper Velvet Rustle
   function playCardRustle() {
     if (isMuted) return;
-    const ctx = getAudioContext();
-    if (!ctx) return;
+    // hover never starts the audio engine (that stalls the page for ~200 ms on Windows);
+    // it only plays once a click has already switched sound on
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    const ctx = audioCtx;
 
     const t = ctx.currentTime;
     const bufferSize = Math.floor(ctx.sampleRate * 0.035);

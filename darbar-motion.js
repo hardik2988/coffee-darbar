@@ -14,7 +14,7 @@
   let lenis = null;
   if (window.Lenis && !reduce) {
     lenis = new Lenis({
-      lerp: 0.085, wheelMultiplier: 0.95, smoothWheel: true,
+      lerp: 0.12, wheelMultiplier: 1, smoothWheel: true,
       // let these panels scroll on their own
       prevent: node => !!(node && node.closest && node.closest('[data-lenis-prevent], .drawer, .modal, .cart-drawer, .qv-modal, .qv-panel, .dnav-overlay, .review-track, .xai-modal, .chat-panel, .chat-messages')),
     });
@@ -117,13 +117,18 @@
     skew = lerp(skew, reduce ? 0 : clamp(vel * 0.0021, -3, 3), 1 - Math.exp(-9 * dt));
     const vh = innerHeight, vw = innerWidth, k = 1 - Math.exp(-10 * dt), kCalm = 1 - Math.exp(-4.5 * dt);
 
+    // pass 1: read every card's position (one layout for the whole frame)
+    const work = [];
     for (const el of cards) {
       if (!el.isConnected) { cards.delete(el); continue; }
       const s = state.get(el);
       if (!s.visible) continue;
+      work.push([el, s, el.getBoundingClientRect()]);
+    }
+    // pass 2: write transforms (no reads in here, so no forced re-layouts)
+    for (const [el, s, r] of work) {
       let p = 0;
       if (s.revStart != null) { p = clamp((now - s.revStart) / (s.deep ? 1400 : 1150), 0, 1); p = 1 - Math.pow(1 - p, 4); }
-      const r = el.getBoundingClientRect();
       let tf;
       if (s.deep) {
         // calm menu card: slow lift on hover, no tilt, no scroll lean
@@ -138,7 +143,8 @@
         tf = `perspective(1100px) translate3d(0,${ty.toFixed(2)}px,0) rotateX(${(s.rx + (1 - p) * 12).toFixed(2)}deg) rotateY(${s.ry.toFixed(2)}deg) skewY(${skew.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
       }
       if (tf !== s.last) { el.style.transform = tf; s.last = tf; }
-      el.style.opacity = p < 1 ? p.toFixed(3) : '';
+      const op = p < 1 ? p.toFixed(3) : '';
+      if (op !== s.op) { el.style.opacity = op; s.op = op; }
       // --rev drives the CSS unveil (photo clip + staggered text) on menu cards
       if (s.deep && !s.revDone) { el.style.setProperty('--rev', p.toFixed(3)); if (p >= 1) s.revDone = true; }
       if (s.img) {
